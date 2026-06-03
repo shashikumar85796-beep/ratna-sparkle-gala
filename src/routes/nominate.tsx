@@ -670,3 +670,25 @@ function Success({ id, category, subCategory, name }: { id: string; category: st
     </section>
   );
 }
+
+function CompanyLogoUpload() {
+  const [logo, setLogo] = useState<string | null>(null);
+  return (
+    <label className="block border-2 border-dashed border-[#C9A84C]/40 hover:border-[#C9A84C] p-6 text-center cursor-pointer transition">
+      {logo ? (
+        <img src={logo} alt="" className="h-16 mx-auto object-contain" />
+      ) : (
+        <>
+          <Upload size={22} className="text-[#C9A84C] mx-auto" />
+          <p className="font-sans text-xs text-white/60 mt-2">Drag &amp; drop logo or click to upload</p>
+        </>
+      )}
+      <input type="file" className="hidden" accept="image/*" onChange={(e) => {
+        const f = e.target.files?.[0];
+        if (!f) return;
+        if (f.size > 5 * 1024 * 1024) return toast.error("File too large (max 5MB)");
+        setLogo(URL.createObjectURL(f));
+      }} />
+    </label>
+  );
+}
