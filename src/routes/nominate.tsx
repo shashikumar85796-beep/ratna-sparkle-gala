@@ -98,11 +98,17 @@ function NominatePage() {
                 <StepWrap key="2">
                   <Step2
                     form={form}
-                    setForm={setForm}
+                    setForm={(f) => { setForm(f); if (Object.keys(errors).length) setErrors(validateForm(f)); }}
+                    errors={errors}
                     onBack={() => setStep(1)}
                     onNext={() => {
-                      const errs = validate(form);
-                      if (errs.length) return toast.error(errs[0]);
+                      const e = validateForm(form);
+                      setErrors(e);
+                      const keys = Object.keys(e);
+                      if (keys.length) {
+                        toast.error(e[keys[0] as keyof FormData] ?? "Please check the highlighted fields");
+                        return;
+                      }
                       setStep(3);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
