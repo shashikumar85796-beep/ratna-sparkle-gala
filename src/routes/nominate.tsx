@@ -315,13 +315,13 @@ function Step2({ form, setForm, errors, onBack, onNext }: {
         <Field label="Organisation Type">
           <select className="input-gold" value={form.orgType} onChange={(e) => update("orgType", e.target.value)}>
             <option value="">Select…</option>
-            {["Broadcaster","Distributor","Technology Company","Digital Platform","Individual","Other"].map((o) => <option key={o}>{o}</option>)}
+            {["Broadcaster","Distributor","Technology Company","OTT/Digital Platform","Individual","Other"].map((o) => <option key={o}>{o}</option>)}
           </select>
         </Field>
         <Field label="Years in Industry">
           <select className="input-gold" value={form.experience} onChange={(e) => update("experience", e.target.value)}>
             <option value="">Select…</option>
-            {["1-5","5-10","10-20","20+"].map((o) => <option key={o}>{o}</option>)}
+            {["Less than 1 year","1–5 Years","5–10 Years","10–20 Years","20+ Years"].map((o) => <option key={o}>{o}</option>)}
           </select>
         </Field>
       </Block>
