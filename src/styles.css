@@ -32,9 +32,9 @@
   --color-gold-light: var(--gold-light);
   --color-gold-dark: var(--gold-dark);
   --color-charcoal: var(--charcoal);
-  --font-display: "Playfair Display", serif;
-  --font-cinzel: "Cinzel", serif;
-  --font-sans: "Inter", sans-serif;
+  --font-display: "Cormorant Garamond", serif;
+  --font-cinzel: "Cinzel Decorative", serif;
+  --font-sans: "DM Sans", sans-serif;
 }
 
 :root {
@@ -103,13 +103,13 @@
 }
 
 @utility font-cinzel {
-  font-family: "Cinzel", serif;
+  font-family: "Cinzel Decorative", serif;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
 @utility font-display {
-  font-family: "Playfair Display", serif;
+  font-family: "Cormorant Garamond", serif;
 }
 
 @keyframes shimmer {
@@ -159,7 +159,7 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   font-size: 0.8rem;
-  font-family: "Cinzel", serif;
+  font-family: "Cinzel Decorative", serif;
   transition: all 0.4s ease;
   display: inline-flex;
   align-items: center;
@@ -183,7 +183,7 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   font-size: 0.8rem;
-  font-family: "Cinzel", serif;
+  font-family: "Cinzel Decorative", serif;
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
@@ -209,7 +209,7 @@
   padding: 0.875rem 1rem;
   border-radius: 2px;
   width: 100%;
-  font-family: "Inter", sans-serif;
+  font-family: "DM Sans", sans-serif;
   transition: all 0.3s ease;
 }
 .input-gold:focus {
