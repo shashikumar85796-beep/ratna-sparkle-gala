@@ -59,6 +59,7 @@ const EMPTY: FormData = {
 function NominatePage() {
   const search = Route.useSearch();
   const [step, setStep] = useState(1);
+  const [direction, setDirection] = useState(1); // 1 = forward, -1 = backward
   const [categoryId, setCategoryId] = useState<string>(search.category ?? "");
   const [subCategory, setSubCategory] = useState("");
   const [form, setForm] = useState<FormData>(EMPTY);
@@ -69,6 +70,12 @@ function NominatePage() {
   const gst = category ? Math.round(category.fee * 0.18) : 0;
   const total = category ? category.fee + gst : 0;
 
+  const goTo = (target: number) => {
+    setDirection(target > step ? 1 : -1);
+    setStep(target);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="bg-background min-h-screen">
       <Toaster theme="dark" position="top-center" />
@@ -78,10 +85,10 @@ function NominatePage() {
         <>
           <NominateHero />
           <Stepper step={step} />
-          <div className="max-w-5xl mx-auto px-6 pb-24">
-            <AnimatePresence mode="wait">
+          <div className="max-w-5xl mx-auto px-6 pb-24 overflow-hidden">
+            <AnimatePresence mode="wait" custom={direction}>
               {step === 1 && (
-                <StepWrap key="1">
+                <StepWrap key="1" direction={direction}>
                   <Step1
                     selectedId={categoryId}
                     onSelect={setCategoryId}
@@ -90,19 +97,18 @@ function NominatePage() {
                     onNext={() => {
                       if (!categoryId) return toast.error("Please choose a category");
                       if (!subCategory) return toast.error("Please choose a sub-category");
-                      setStep(2);
-                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      goTo(2);
                     }}
                   />
                 </StepWrap>
               )}
               {step === 2 && (
-                <StepWrap key="2">
+                <StepWrap key="2" direction={direction}>
                   <Step2
                     form={form}
                     setForm={(f) => { setForm(f); if (Object.keys(errors).length) setErrors(validateForm(f)); }}
                     errors={errors}
-                    onBack={() => setStep(1)}
+                    onBack={() => goTo(1)}
                     onNext={() => {
                       const e = validateForm(form);
                       setErrors(e);
@@ -111,14 +117,13 @@ function NominatePage() {
                         toast.error(e[keys[0] as keyof FormData] ?? "Please check the highlighted fields");
                         return;
                       }
-                      setStep(3);
-                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      goTo(3);
                     }}
                   />
                 </StepWrap>
               )}
               {step === 3 && category && (
-                <StepWrap key="3">
+                <StepWrap key="3" direction={direction}>
                   <Step3
                     fee={category.fee}
                     gst={gst}
@@ -126,7 +131,7 @@ function NominatePage() {
                     categoryName={category.name}
                     subCategory={subCategory}
                     nominee={form.fullName}
-                    onBack={() => setStep(2)}
+                    onBack={() => goTo(2)}
                     onConfirm={() => {
                       const id = "BCS2025" + Math.random().toString(36).slice(2, 8).toUpperCase();
                       setDone({ id });
@@ -154,9 +159,16 @@ function NominatePage() {
   );
 }
 
-function StepWrap({ children }: { children: React.ReactNode }) {
+function StepWrap({ children, direction }: { children: React.ReactNode; direction: number }) {
+  const xOffset = 60;
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}>
+    <motion.div
+      custom={direction}
+      initial={{ opacity: 0, x: direction * xOffset }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: direction * -xOffset }}
+      transition={{ duration: 0.45, ease: [0.32, 0.72, 0, 1] }}
+    >
       {children}
     </motion.div>
   );
