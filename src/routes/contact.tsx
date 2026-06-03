@@ -122,11 +122,24 @@ function ContactPage() {
   );
 }
 
-function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
+function Field({ label, required, helper, error, children }: {
+  label: string;
+  required?: boolean;
+  helper?: string;
+  error?: string;
+  children: React.ReactNode;
+}) {
   return (
     <div>
-      <label className="block font-cinzel text-[10px] text-[#C9A84C] mb-2">{label}{required && " *"}</label>
+      <label className="field-label">
+        {label}{required && <span className="req">*</span>}
+      </label>
       {children}
+      {error ? (
+        <p className="field-error">{error}</p>
+      ) : helper ? (
+        <p className="field-helper">{helper}</p>
+      ) : null}
     </div>
   );
 }
