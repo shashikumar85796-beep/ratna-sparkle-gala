@@ -31,6 +31,7 @@ type FormData = {
   email: string;
   mobile: string;
   whatsapp: string;
+  whatsappSame: boolean;
   website: string;
   bio: string;
   achievements: string;
@@ -44,14 +45,15 @@ type FormData = {
   referralCode: string;
   terms: boolean;
   truth: boolean;
+  contactConsent: boolean;
 };
 
 const EMPTY: FormData = {
   fullName: "", designation: "", organisation: "", orgType: "", experience: "",
-  email: "", mobile: "", whatsapp: "", website: "",
+  email: "", mobile: "", whatsapp: "", whatsappSame: false, website: "",
   bio: "", achievements: "", whyDeserve: "",
   address: "", city: "", state: "", pincode: "", gst: "",
-  referral: "", referralCode: "", terms: false, truth: false,
+  referral: "", referralCode: "", terms: false, truth: false, contactConsent: false,
 };
 
 function NominatePage() {
