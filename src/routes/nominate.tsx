@@ -291,18 +291,25 @@ function Field({ label, required, helper, error, children }: {
   );
 }
 
-function Step2({ form, setForm, onBack, onNext }: {
-  form: FormData; setForm: (f: FormData) => void; onBack: () => void; onNext: () => void;
+function Step2({ form, setForm, errors, onBack, onNext }: {
+  form: FormData; setForm: (f: FormData) => void; errors: FormErrors; onBack: () => void; onNext: () => void;
 }) {
   const update = <K extends keyof FormData>(k: K, v: FormData[K]) => setForm({ ...form, [k]: v });
   const [photo, setPhoto] = useState<string | null>(null);
+  const inputCls = (k: keyof FormData) => `input-gold${errors[k] ? " has-error" : ""}`;
 
   return (
     <div className="pt-14 space-y-10">
       <Block title="Nominee Information">
-        <Field label="Full Name of Nominee" required><input className="input-gold" value={form.fullName} onChange={(e) => update("fullName", e.target.value)} /></Field>
-        <Field label="Designation / Title" required><input className="input-gold" value={form.designation} onChange={(e) => update("designation", e.target.value)} /></Field>
-        <Field label="Organisation / Company Name" required><input className="input-gold" value={form.organisation} onChange={(e) => update("organisation", e.target.value)} /></Field>
+        <Field label="Full Name of Nominee" required error={errors.fullName}>
+          <input className={inputCls("fullName")} value={form.fullName} onChange={(e) => update("fullName", e.target.value)} />
+        </Field>
+        <Field label="Designation / Title" required error={errors.designation}>
+          <input className={inputCls("designation")} value={form.designation} onChange={(e) => update("designation", e.target.value)} />
+        </Field>
+        <Field label="Organisation / Company Name" required error={errors.organisation}>
+          <input className={inputCls("organisation")} value={form.organisation} onChange={(e) => update("organisation", e.target.value)} />
+        </Field>
         <Field label="Organisation Type">
           <select className="input-gold" value={form.orgType} onChange={(e) => update("orgType", e.target.value)}>
             <option value="">Select…</option>
@@ -318,27 +325,29 @@ function Step2({ form, setForm, onBack, onNext }: {
       </Block>
 
       <Block title="Contact Information">
-        <Field label="Email Address" required><input type="email" className="input-gold" value={form.email} onChange={(e) => update("email", e.target.value)} /></Field>
-        <Field label="Mobile Number" required>
+        <Field label="Email Address" required error={errors.email} helper="We'll send your nomination confirmation here.">
+          <input type="email" className={inputCls("email")} value={form.email} onChange={(e) => update("email", e.target.value)} />
+        </Field>
+        <Field label="Mobile Number" required error={errors.mobile}>
           <div className="flex">
             <span className="input-gold !w-auto !rounded-r-none border-r-0 text-white/70">+91</span>
-            <input className="input-gold !rounded-l-none" value={form.mobile} onChange={(e) => update("mobile", e.target.value.replace(/\D/g, "").slice(0, 10))} />
+            <input className={`${inputCls("mobile")} !rounded-l-none`} value={form.mobile} onChange={(e) => update("mobile", e.target.value.replace(/\D/g, "").slice(0, 10))} />
           </div>
         </Field>
-        <Field label="WhatsApp Number"><input className="input-gold" value={form.whatsapp} onChange={(e) => update("whatsapp", e.target.value)} /></Field>
+        <Field label="WhatsApp Number" helper="Optional — for award day coordination."><input className="input-gold" value={form.whatsapp} onChange={(e) => update("whatsapp", e.target.value)} /></Field>
         <Field label="Official Website URL"><input className="input-gold" placeholder="https://" value={form.website} onChange={(e) => update("website", e.target.value)} /></Field>
       </Block>
 
       <Block title="Nominee Profile">
         <div className="md:col-span-2">
-          <Field label="Upload Profile Photo (max 5MB)">
+          <Field label="Upload Profile Photo" helper="JPG or PNG · square preferred · max 5MB">
             <label className="block border-2 border-dashed border-[#C9A84C]/40 hover:border-[#C9A84C] p-8 text-center cursor-pointer transition">
               {photo ? (
                 <img src={photo} alt="" className="w-24 h-24 mx-auto object-cover rounded-full border-2 border-[#C9A84C]" />
               ) : (
                 <>
                   <Upload size={28} className="text-[#C9A84C] mx-auto" />
-                  <p className="font-cinzel text-[10px] text-white/60 mt-3">Drag & drop or click — JPG / PNG</p>
+                  <p className="font-sans text-sm text-white/65 mt-3">Drag &amp; drop or click to upload</p>
                 </>
               )}
               <input type="file" className="hidden" accept="image/*" onChange={(e) => {
@@ -350,24 +359,34 @@ function Step2({ form, setForm, onBack, onNext }: {
             </label>
           </Field>
         </div>
-        <Counter label="Brief Bio" value={form.bio} onChange={(v) => update("bio", v)} max={500} />
+        <Counter label="Brief Bio" value={form.bio} onChange={(v) => update("bio", v)} max={500} helper="A concise introduction shown in the souvenir." />
         <Counter label="Key Achievements" value={form.achievements} onChange={(v) => update("achievements", v)} max={800} />
         <div className="md:col-span-2">
-          <Counter label="Why do you deserve this award?" value={form.whyDeserve} onChange={(v) => update("whyDeserve", v)} max={1000} />
+          <Counter label="Why do you deserve this award?" value={form.whyDeserve} onChange={(v) => update("whyDeserve", v)} max={1000} helper="Tell the jury what sets your work apart." />
         </div>
       </Block>
 
       <Block title="Organisation Details">
-        <div className="md:col-span-2"><Field label="Company Address" required><input className="input-gold" value={form.address} onChange={(e) => update("address", e.target.value)} /></Field></div>
-        <Field label="City" required><input className="input-gold" value={form.city} onChange={(e) => update("city", e.target.value)} /></Field>
-        <Field label="State" required>
-          <select className="input-gold" value={form.state} onChange={(e) => update("state", e.target.value)}>
+        <div className="md:col-span-2">
+          <Field label="Company Address" required error={errors.address}>
+            <input className={inputCls("address")} value={form.address} onChange={(e) => update("address", e.target.value)} />
+          </Field>
+        </div>
+        <Field label="City" required error={errors.city}>
+          <input className={inputCls("city")} value={form.city} onChange={(e) => update("city", e.target.value)} />
+        </Field>
+        <Field label="State" required error={errors.state}>
+          <select className={inputCls("state")} value={form.state} onChange={(e) => update("state", e.target.value)}>
             <option value="">Select…</option>
             {INDIAN_STATES.map((s) => <option key={s}>{s}</option>)}
           </select>
         </Field>
-        <Field label="PIN Code" required><input className="input-gold" maxLength={6} value={form.pincode} onChange={(e) => update("pincode", e.target.value.replace(/\D/g, ""))} /></Field>
-        <Field label="GST Number (for invoice)"><input className="input-gold" value={form.gst} onChange={(e) => update("gst", e.target.value.toUpperCase())} /></Field>
+        <Field label="PIN Code" required error={errors.pincode}>
+          <input className={inputCls("pincode")} maxLength={6} value={form.pincode} onChange={(e) => update("pincode", e.target.value.replace(/\D/g, ""))} />
+        </Field>
+        <Field label="GST Number" helper="Required for GST-compliant invoice.">
+          <input className="input-gold" value={form.gst} onChange={(e) => update("gst", e.target.value.toUpperCase())} />
+        </Field>
       </Block>
 
       <Block title="Referral">
@@ -381,14 +400,17 @@ function Step2({ form, setForm, onBack, onNext }: {
       </Block>
 
       <div className="space-y-3 pt-2">
-        {[
+        {([
           ["terms", "I agree to the Terms & Conditions and Nomination Guidelines"],
           ["truth", "I confirm all information provided is accurate and truthful"],
-        ].map(([k, t]) => (
-          <label key={k} className="flex items-start gap-3 text-sm text-white/75 cursor-pointer">
-            <input type="checkbox" checked={form[k as "terms" | "truth"]} onChange={(e) => update(k as "terms" | "truth", e.target.checked)} className="mt-1 w-4 h-4 accent-[#C9A84C]" />
-            <span>{t}</span>
-          </label>
+        ] as const).map(([k, t]) => (
+          <div key={k}>
+            <label className="flex items-start gap-3 text-[15px] font-sans text-white/80 cursor-pointer leading-relaxed">
+              <input type="checkbox" checked={form[k]} onChange={(e) => update(k, e.target.checked)} className="mt-1 w-4 h-4 accent-[#C9A84C]" />
+              <span>{t}</span>
+            </label>
+            {errors[k] && <p className="field-error ml-7">{errors[k]}</p>}
+          </div>
         ))}
       </div>
 
@@ -403,15 +425,17 @@ function Step2({ form, setForm, onBack, onNext }: {
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="glass-card p-8">
-      <p className="font-cinzel text-[11px] text-[#C9A84C] mb-6 pb-4 border-b border-[#C9A84C]/20">{title}</p>
-      <div className="grid md:grid-cols-2 gap-5">{children}</div>
+      <p className="font-cinzel text-[11px] text-[#C9A84C] mb-6 pb-4 border-b border-[#C9A84C]/20 tracking-[0.25em]">{title}</p>
+      <div className="grid md:grid-cols-2 gap-6">{children}</div>
     </div>
   );
 }
 
-function Counter({ label, value, onChange, max }: { label: string; value: string; onChange: (v: string) => void; max: number }) {
+function Counter({ label, value, onChange, max, helper }: { label: string; value: string; onChange: (v: string) => void; max: number; helper?: string }) {
+  const pct = value.length / max;
+  const cls = value.length >= max ? "counter-meta at-limit" : pct > 0.85 ? "counter-meta near-limit" : "counter-meta";
   return (
-    <Field label={label}>
+    <Field label={label} helper={helper}>
       <textarea
         rows={3}
         className="input-gold resize-none"
@@ -419,7 +443,7 @@ function Counter({ label, value, onChange, max }: { label: string; value: string
         maxLength={max}
         onChange={(e) => onChange(e.target.value)}
       />
-      <p className="text-[10px] text-white/45 mt-1 text-right">{value.length} / {max}</p>
+      <p className={cls}>{value.length} / {max}</p>
     </Field>
   );
 }
