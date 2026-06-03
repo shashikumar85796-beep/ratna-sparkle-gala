@@ -576,7 +576,15 @@ function Step3({ fee, gst, total, categoryName, subCategory, nominee, onBack, on
                   <span className="text-[#C9A84C] font-medium flex items-center gap-2">{v} <button onClick={() => copy(v)} className="opacity-60 hover:opacity-100"><Copy size={12} /></button></span>
                 </div>
               ))}
-              <Field label="Reference Number"><input className="input-gold" placeholder="NEFT/RTGS reference" /></Field>
+              <div className="pt-3 grid sm:grid-cols-2 gap-4">
+                <Field label="Transaction Reference Number" required><input className="input-gold" placeholder="NEFT/RTGS UTR" /></Field>
+                <Field label="Date of Transfer" required><input type="date" className="input-gold" /></Field>
+              </div>
+              <label className="block border-2 border-dashed border-[#C9A84C]/40 p-6 text-center cursor-pointer hover:border-[#C9A84C]">
+                <Upload size={24} className="text-[#C9A84C] mx-auto" />
+                <p className="font-cinzel text-[10px] text-white/60 mt-2">Upload Transfer Screenshot</p>
+                <input type="file" accept="image/*" className="hidden" />
+              </label>
             </div>
           )}
         </div>
