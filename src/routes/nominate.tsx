@@ -61,6 +61,7 @@ function NominatePage() {
   const [subCategory, setSubCategory] = useState("");
   const [form, setForm] = useState<FormData>(EMPTY);
   const [done, setDone] = useState<{ id: string } | null>(null);
+  const [errors, setErrors] = useState<FormErrors>({});
 
   const category = CATEGORIES.find((c) => c.id === categoryId);
   const gst = category ? Math.round(category.fee * 0.18) : 0;
