@@ -417,20 +417,22 @@ function Counter({ label, value, onChange, max }: { label: string; value: string
   );
 }
 
-function validate(f: FormData): string[] {
-  const errs: string[] = [];
-  if (!f.fullName.trim()) errs.push("Full name is required");
-  else if (!f.designation.trim()) errs.push("Designation is required");
-  else if (!f.organisation.trim()) errs.push("Organisation is required");
-  else if (!/^\S+@\S+\.\S+$/.test(f.email)) errs.push("Valid email is required");
-  else if (f.mobile.length !== 10) errs.push("Valid 10-digit mobile is required");
-  else if (!f.address.trim()) errs.push("Address is required");
-  else if (!f.city.trim()) errs.push("City is required");
-  else if (!f.state) errs.push("State is required");
-  else if (f.pincode.length !== 6) errs.push("Valid 6-digit PIN is required");
-  else if (!f.terms) errs.push("Please accept terms and conditions");
-  else if (!f.truth) errs.push("Please confirm information accuracy");
-  return errs;
+type FormErrors = Partial<Record<keyof FormData, string>>;
+
+function validateForm(f: FormData): FormErrors {
+  const e: FormErrors = {};
+  if (!f.fullName.trim()) e.fullName = "Full name is required";
+  if (!f.designation.trim()) e.designation = "Designation is required";
+  if (!f.organisation.trim()) e.organisation = "Organisation is required";
+  if (!/^\S+@\S+\.\S+$/.test(f.email)) e.email = "Enter a valid email address";
+  if (f.mobile.length !== 10) e.mobile = "Mobile must be 10 digits";
+  if (!f.address.trim()) e.address = "Address is required";
+  if (!f.city.trim()) e.city = "City is required";
+  if (!f.state) e.state = "Please select a state";
+  if (f.pincode.length !== 6) e.pincode = "PIN must be 6 digits";
+  if (!f.terms) e.terms = "Please accept the terms & conditions";
+  if (!f.truth) e.truth = "Please confirm accuracy";
+  return e;
 }
 
 function Step3({ fee, gst, total, categoryName, subCategory, nominee, onBack, onConfirm }: {
