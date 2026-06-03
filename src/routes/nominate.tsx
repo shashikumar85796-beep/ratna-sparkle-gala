@@ -398,29 +398,44 @@ function Step2({ form, setForm, errors, onBack, onNext }: {
           <input className={inputCls("pincode")} maxLength={6} value={form.pincode} onChange={(e) => update("pincode", e.target.value.replace(/\D/g, ""))} />
         </Field>
         <Field label="GST Number" helper="Required for GST-compliant invoice.">
-          <input className="input-gold" value={form.gst} onChange={(e) => update("gst", e.target.value.toUpperCase())} />
+          <input className="input-gold" value={form.gst} onChange={(e) => update("gst", e.target.value.toUpperCase())} maxLength={15} />
         </Field>
+        <div className="md:col-span-2">
+          <Field label="Company Logo" helper="Optional — PNG/SVG preferred for souvenir.">
+            <CompanyLogoUpload />
+          </Field>
+        </div>
       </Block>
 
       <Block title="Referral">
         <Field label="How did you hear about us?">
           <select className="input-gold" value={form.referral} onChange={(e) => update("referral", e.target.value)}>
             <option value="">Select…</option>
-            {["Social Media","Industry Colleague","Email","Website","Advertisement","Other"].map((o) => <option key={o}>{o}</option>)}
+            {["Social Media","Email Newsletter","Industry Colleague","Website Search","Advertisement","News Article","Other"].map((o) => <option key={o}>{o}</option>)}
           </select>
         </Field>
-        <Field label="Referral Code"><input className="input-gold" value={form.referralCode} onChange={(e) => update("referralCode", e.target.value)} /></Field>
+        <Field label="Referral / Promo Code">
+          <div className="flex gap-2">
+            <input className="input-gold" value={form.referralCode} onChange={(e) => update("referralCode", e.target.value.toUpperCase())} />
+            <button
+              type="button"
+              onClick={() => form.referralCode ? toast.success(`Code "${form.referralCode}" applied`) : toast.error("Enter a code first")}
+              className="btn-outline-gold !px-5"
+            >Apply</button>
+          </div>
+        </Field>
       </Block>
 
       <div className="space-y-3 pt-2">
         {([
-          ["terms", "I agree to the Terms & Conditions and Nomination Guidelines"],
-          ["truth", "I confirm all information provided is accurate and truthful"],
-        ] as const).map(([k, t]) => (
+          ["terms", "I agree to the Terms & Conditions and Nomination Guidelines", true],
+          ["truth", "I confirm all information provided is accurate and truthful", true],
+          ["contactConsent", "I consent to being contacted regarding my nomination", false],
+        ] as const).map(([k, t, req]) => (
           <div key={k}>
             <label className="flex items-start gap-3 text-[15px] font-sans text-white/80 cursor-pointer leading-relaxed">
               <input type="checkbox" checked={form[k]} onChange={(e) => update(k, e.target.checked)} className="mt-1 w-4 h-4 accent-[#C9A84C]" />
-              <span>{t}</span>
+              <span>{t}{req && <span className="text-[#C9A84C] ml-1">*</span>}</span>
             </label>
             {errors[k] && <p className="field-error ml-7">{errors[k]}</p>}
           </div>
