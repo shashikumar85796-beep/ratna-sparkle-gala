@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Copy, Lock, Shield, Upload, Award, Sparkles, Download } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Copy, Lock, Shield, Upload, Award, Download, Linkedin, Twitter, MessageCircle } from "lucide-react";
 import { Navigation } from "@/components/site/Navigation";
 import { Footer } from "@/components/site/Footer";
 import { GoldParticles } from "@/components/site/GoldParticles";
@@ -31,6 +31,7 @@ type FormData = {
   email: string;
   mobile: string;
   whatsapp: string;
+  whatsappSame: boolean;
   website: string;
   bio: string;
   achievements: string;
@@ -44,14 +45,15 @@ type FormData = {
   referralCode: string;
   terms: boolean;
   truth: boolean;
+  contactConsent: boolean;
 };
 
 const EMPTY: FormData = {
   fullName: "", designation: "", organisation: "", orgType: "", experience: "",
-  email: "", mobile: "", whatsapp: "", website: "",
+  email: "", mobile: "", whatsapp: "", whatsappSame: false, website: "",
   bio: "", achievements: "", whyDeserve: "",
   address: "", city: "", state: "", pincode: "", gst: "",
-  referral: "", referralCode: "", terms: false, truth: false,
+  referral: "", referralCode: "", terms: false, truth: false, contactConsent: false,
 };
 
 function NominatePage() {
@@ -171,9 +173,9 @@ function NominateHero() {
           Register Your Nomination
         </h1>
         <div className="gold-divider" />
-        <p className="text-white/70 mt-4">Join India's Most Prestigious Media Industry Award</p>
+        <p className="text-white/70 mt-4">BCS Ratna Award 2025 — Nominations Now Open</p>
         <div className="flex flex-wrap gap-3 justify-center mt-8">
-          {["Secure Payment", "Official Recognition", "Expert Jury Panel"].map((t) => (
+          {["Secure Payment", "Official Certificate", "Expert Jury"].map((t) => (
             <span key={t} className="flex items-center gap-2 px-4 py-2 border border-[#C9A84C]/30 rounded-full font-cinzel text-[10px] text-[#C9A84C]">
               <Check size={14} /> {t}
             </span>
@@ -313,13 +315,13 @@ function Step2({ form, setForm, errors, onBack, onNext }: {
         <Field label="Organisation Type">
           <select className="input-gold" value={form.orgType} onChange={(e) => update("orgType", e.target.value)}>
             <option value="">Select…</option>
-            {["Broadcaster","Distributor","Technology Company","Digital Platform","Individual","Other"].map((o) => <option key={o}>{o}</option>)}
+            {["Broadcaster","Distributor","Technology Company","OTT/Digital Platform","Individual","Other"].map((o) => <option key={o}>{o}</option>)}
           </select>
         </Field>
         <Field label="Years in Industry">
           <select className="input-gold" value={form.experience} onChange={(e) => update("experience", e.target.value)}>
             <option value="">Select…</option>
-            {["1-5","5-10","10-20","20+"].map((o) => <option key={o}>{o}</option>)}
+            {["Less than 1 year","1–5 Years","5–10 Years","10–20 Years","20+ Years"].map((o) => <option key={o}>{o}</option>)}
           </select>
         </Field>
       </Block>
@@ -334,7 +336,18 @@ function Step2({ form, setForm, errors, onBack, onNext }: {
             <input className={`${inputCls("mobile")} !rounded-l-none`} value={form.mobile} onChange={(e) => update("mobile", e.target.value.replace(/\D/g, "").slice(0, 10))} />
           </div>
         </Field>
-        <Field label="WhatsApp Number" helper="Optional — for award day coordination."><input className="input-gold" value={form.whatsapp} onChange={(e) => update("whatsapp", e.target.value)} /></Field>
+        <Field label="WhatsApp Number" helper="Optional — for award day coordination.">
+          <input
+            className="input-gold disabled:opacity-60"
+            disabled={form.whatsappSame}
+            value={form.whatsappSame ? form.mobile : form.whatsapp}
+            onChange={(e) => update("whatsapp", e.target.value.replace(/\D/g, "").slice(0, 10))}
+          />
+          <label className="mt-2 flex items-center gap-2 text-xs font-sans text-white/65 cursor-pointer">
+            <input type="checkbox" checked={form.whatsappSame} onChange={(e) => update("whatsappSame", e.target.checked)} className="w-3.5 h-3.5 accent-[#C9A84C]" />
+            Same as mobile number
+          </label>
+        </Field>
         <Field label="Official Website URL"><input className="input-gold" placeholder="https://" value={form.website} onChange={(e) => update("website", e.target.value)} /></Field>
       </Block>
 
@@ -385,29 +398,44 @@ function Step2({ form, setForm, errors, onBack, onNext }: {
           <input className={inputCls("pincode")} maxLength={6} value={form.pincode} onChange={(e) => update("pincode", e.target.value.replace(/\D/g, ""))} />
         </Field>
         <Field label="GST Number" helper="Required for GST-compliant invoice.">
-          <input className="input-gold" value={form.gst} onChange={(e) => update("gst", e.target.value.toUpperCase())} />
+          <input className="input-gold" value={form.gst} onChange={(e) => update("gst", e.target.value.toUpperCase())} maxLength={15} />
         </Field>
+        <div className="md:col-span-2">
+          <Field label="Company Logo" helper="Optional — PNG/SVG preferred for souvenir.">
+            <CompanyLogoUpload />
+          </Field>
+        </div>
       </Block>
 
       <Block title="Referral">
         <Field label="How did you hear about us?">
           <select className="input-gold" value={form.referral} onChange={(e) => update("referral", e.target.value)}>
             <option value="">Select…</option>
-            {["Social Media","Industry Colleague","Email","Website","Advertisement","Other"].map((o) => <option key={o}>{o}</option>)}
+            {["Social Media","Email Newsletter","Industry Colleague","Website Search","Advertisement","News Article","Other"].map((o) => <option key={o}>{o}</option>)}
           </select>
         </Field>
-        <Field label="Referral Code"><input className="input-gold" value={form.referralCode} onChange={(e) => update("referralCode", e.target.value)} /></Field>
+        <Field label="Referral / Promo Code">
+          <div className="flex gap-2">
+            <input className="input-gold" value={form.referralCode} onChange={(e) => update("referralCode", e.target.value.toUpperCase())} />
+            <button
+              type="button"
+              onClick={() => form.referralCode ? toast.success(`Code "${form.referralCode}" applied`) : toast.error("Enter a code first")}
+              className="btn-outline-gold !px-5"
+            >Apply</button>
+          </div>
+        </Field>
       </Block>
 
       <div className="space-y-3 pt-2">
         {([
-          ["terms", "I agree to the Terms & Conditions and Nomination Guidelines"],
-          ["truth", "I confirm all information provided is accurate and truthful"],
-        ] as const).map(([k, t]) => (
+          ["terms", "I agree to the Terms & Conditions and Nomination Guidelines", true],
+          ["truth", "I confirm all information provided is accurate and truthful", true],
+          ["contactConsent", "I consent to being contacted regarding my nomination", false],
+        ] as const).map(([k, t, req]) => (
           <div key={k}>
             <label className="flex items-start gap-3 text-[15px] font-sans text-white/80 cursor-pointer leading-relaxed">
               <input type="checkbox" checked={form[k]} onChange={(e) => update(k, e.target.checked)} className="mt-1 w-4 h-4 accent-[#C9A84C]" />
-              <span>{t}</span>
+              <span>{t}{req && <span className="text-[#C9A84C] ml-1">*</span>}</span>
             </label>
             {errors[k] && <p className="field-error ml-7">{errors[k]}</p>}
           </div>
@@ -548,7 +576,15 @@ function Step3({ fee, gst, total, categoryName, subCategory, nominee, onBack, on
                   <span className="text-[#C9A84C] font-medium flex items-center gap-2">{v} <button onClick={() => copy(v)} className="opacity-60 hover:opacity-100"><Copy size={12} /></button></span>
                 </div>
               ))}
-              <Field label="Reference Number"><input className="input-gold" placeholder="NEFT/RTGS reference" /></Field>
+              <div className="pt-3 grid sm:grid-cols-2 gap-4">
+                <Field label="Transaction Reference Number" required><input className="input-gold" placeholder="NEFT/RTGS UTR" /></Field>
+                <Field label="Date of Transfer" required><input type="date" className="input-gold" /></Field>
+              </div>
+              <label className="block border-2 border-dashed border-[#C9A84C]/40 p-6 text-center cursor-pointer hover:border-[#C9A84C]">
+                <Upload size={24} className="text-[#C9A84C] mx-auto" />
+                <p className="font-cinzel text-[10px] text-white/60 mt-2">Upload Transfer Screenshot</p>
+                <input type="file" accept="image/*" className="hidden" />
+              </label>
             </div>
           )}
         </div>
@@ -612,10 +648,19 @@ function Success({ id, category, subCategory, name }: { id: string; category: st
             <Row k="Sub-Category" v={subCategory} />
           </div>
         </div>
-        <div className="flex flex-wrap gap-3 justify-center mt-8">
-          <a href="#" className="btn-outline-gold"><Sparkles size={14} /> Share on LinkedIn</a>
-          <a href="#" className="btn-outline-gold"><Sparkles size={14} /> Twitter</a>
-          <a href="#" className="btn-outline-gold"><Sparkles size={14} /> WhatsApp</a>
+        <p className="font-cinzel text-[10px] text-[#C9A84C] mt-10 mb-3">Share Your Nomination</p>
+        <div className="flex flex-wrap gap-3 justify-center">
+          {(() => {
+            const text = `I'm proud to be nominated for BCS Ratna Award 2025 in ${category}! India's most prestigious media industry award. #BCSRatnaAward2025`;
+            const url = typeof window !== "undefined" ? window.location.origin : "https://bcsratnaaward.com";
+            return (
+              <>
+                <a target="_blank" rel="noopener" href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`} className="btn-outline-gold"><Linkedin size={14} /> LinkedIn</a>
+                <a target="_blank" rel="noopener" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`} className="btn-outline-gold"><Twitter size={14} /> Twitter / X</a>
+                <a target="_blank" rel="noopener" href={`https://wa.me/?text=${encodeURIComponent(text + " " + url)}`} className="btn-outline-gold"><MessageCircle size={14} /> WhatsApp</a>
+              </>
+            );
+          })()}
         </div>
         <div className="flex flex-wrap gap-3 justify-center mt-4">
           <button className="btn-gold"><Download size={14} /> Download Receipt</button>
@@ -623,5 +668,27 @@ function Success({ id, category, subCategory, name }: { id: string; category: st
         </div>
       </div>
     </section>
+  );
+}
+
+function CompanyLogoUpload() {
+  const [logo, setLogo] = useState<string | null>(null);
+  return (
+    <label className="block border-2 border-dashed border-[#C9A84C]/40 hover:border-[#C9A84C] p-6 text-center cursor-pointer transition">
+      {logo ? (
+        <img src={logo} alt="" className="h-16 mx-auto object-contain" />
+      ) : (
+        <>
+          <Upload size={22} className="text-[#C9A84C] mx-auto" />
+          <p className="font-sans text-xs text-white/60 mt-2">Drag &amp; drop logo or click to upload</p>
+        </>
+      )}
+      <input type="file" className="hidden" accept="image/*" onChange={(e) => {
+        const f = e.target.files?.[0];
+        if (!f) return;
+        if (f.size > 5 * 1024 * 1024) return toast.error("File too large (max 5MB)");
+        setLogo(URL.createObjectURL(f));
+      }} />
+    </label>
   );
 }
