@@ -465,8 +465,7 @@ function Step3({ fee, gst, total, categoryName, subCategory, nominee, onBack, on
           {tab === "upi" && (
             <div className="space-y-5">
               <div className="bg-white p-6 w-fit mx-auto">
-                <img alt="UPI QR" className="w-48 h-48" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='white'/><g fill='black'>" +
-                  Array.from({length: 100}).map((_,i) => `<rect x='${(i*7)%100}' y='${Math.floor(i*7/100)*7}' width='6' height='6'/>`).join("") + "</g></svg>"} />
+                <img alt="UPI QR" className="w-48 h-48" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=awards@aavishkar&pn=Aavishkar%20Media" />
               </div>
               <div className="flex items-center gap-2 justify-center">
                 <span className="font-cinzel text-xs text-white/70">UPI ID:</span>
