@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Copy, Lock, Shield, Upload, Award, Sparkles, Download } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Copy, Lock, Shield, Upload, Award, Download, Linkedin, Twitter, MessageCircle } from "lucide-react";
 import { Navigation } from "@/components/site/Navigation";
 import { Footer } from "@/components/site/Footer";
 import { GoldParticles } from "@/components/site/GoldParticles";
