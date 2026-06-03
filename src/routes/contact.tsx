@@ -16,14 +16,41 @@ export const Route = createFileRoute("/contact")({
   component: ContactPage,
 });
 
+type ContactForm = { name: string; email: string; phone: string; subject: string; message: string };
+type ContactErrors = Partial<Record<keyof ContactForm, string>>;
+
+function validateContact(f: ContactForm): ContactErrors {
+  const e: ContactErrors = {};
+  if (!f.name.trim()) e.name = "Please enter your name";
+  if (!/^\S+@\S+\.\S+$/.test(f.email)) e.email = "Enter a valid email address";
+  if (f.phone && !/^[\d+\-\s()]{7,}$/.test(f.phone)) e.phone = "Enter a valid phone number";
+  if (!f.message.trim()) e.message = "Please share a brief message";
+  else if (f.message.trim().length < 10) e.message = "Message should be at least 10 characters";
+  return e;
+}
+
 function ContactPage() {
-  const [f, setF] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
+  const [f, setF] = useState<ContactForm>({ name: "", email: "", phone: "", subject: "", message: "" });
+  const [errors, setErrors] = useState<ContactErrors>({});
+  const update = <K extends keyof ContactForm>(k: K, v: ContactForm[K]) => {
+    const next = { ...f, [k]: v };
+    setF(next);
+    if (Object.keys(errors).length) setErrors(validateContact(next));
+  };
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!f.name || !f.email || !f.message) return toast.error("Please fill required fields");
+    const errs = validateContact(f);
+    setErrors(errs);
+    const keys = Object.keys(errs);
+    if (keys.length) {
+      toast.error(errs[keys[0] as keyof ContactForm] ?? "Please check the highlighted fields");
+      return;
+    }
     toast.success("Message sent — we'll be in touch within 24 hours.");
     setF({ name: "", email: "", phone: "", subject: "", message: "" });
+    setErrors({});
   };
+  const inputCls = (k: keyof ContactForm) => `input-gold${errors[k] ? " has-error" : ""}`;
 
   return (
     <div className="bg-background min-h-screen">
@@ -34,23 +61,29 @@ function ContactPage() {
         <GoldParticles count={30} />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,168,76,0.18),transparent_60%)]" />
         <div className="relative max-w-4xl mx-auto px-6 text-center">
-          <p className="font-cinzel text-xs text-[#C9A84C] mb-4">Get in Touch</p>
+          <p className="font-cinzel text-xs text-[#C9A84C] mb-4 tracking-[0.3em]">Get in Touch</p>
           <h1 className="font-display text-5xl md:text-6xl font-bold text-gold-gradient">Contact Us</h1>
           <div className="gold-divider" />
-          <p className="text-white/70 mt-4">We respond to every enquiry within one business day.</p>
+          <p className="font-sans text-[17px] text-white/70 mt-4 leading-relaxed">We respond to every enquiry within one business day.</p>
         </div>
       </section>
 
       <section className="max-w-6xl mx-auto px-6 pb-24 grid lg:grid-cols-5 gap-10">
-        <form onSubmit={submit} className="lg:col-span-3 glass-card p-10 space-y-5">
-          <div className="grid sm:grid-cols-2 gap-5">
-            <Field label="Name" required><input className="input-gold" value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} /></Field>
-            <Field label="Email" required><input type="email" className="input-gold" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} /></Field>
-            <Field label="Phone"><input className="input-gold" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} /></Field>
-            <Field label="Subject"><input className="input-gold" value={f.subject} onChange={(e) => setF({ ...f, subject: e.target.value })} /></Field>
+        <form onSubmit={submit} noValidate className="lg:col-span-3 glass-card p-10 space-y-6">
+          <div className="grid sm:grid-cols-2 gap-6">
+            <Field label="Name" required error={errors.name}>
+              <input className={inputCls("name")} value={f.name} onChange={(e) => update("name", e.target.value)} />
+            </Field>
+            <Field label="Email" required error={errors.email}>
+              <input type="email" className={inputCls("email")} value={f.email} onChange={(e) => update("email", e.target.value)} />
+            </Field>
+            <Field label="Phone" error={errors.phone} helper="Optional — include country code.">
+              <input className={inputCls("phone")} value={f.phone} onChange={(e) => update("phone", e.target.value)} />
+            </Field>
+            <Field label="Subject"><input className="input-gold" value={f.subject} onChange={(e) => update("subject", e.target.value)} /></Field>
           </div>
-          <Field label="Message" required>
-            <textarea rows={6} className="input-gold resize-none" value={f.message} onChange={(e) => setF({ ...f, message: e.target.value })} />
+          <Field label="Message" required error={errors.message} helper="Tell us how we can help.">
+            <textarea rows={6} className={`${inputCls("message")} resize-none`} value={f.message} onChange={(e) => update("message", e.target.value)} />
           </Field>
           <button type="submit" className="btn-gold">Send Message</button>
         </form>
@@ -67,8 +100,8 @@ function ContactPage() {
                 <i.icon size={20} className="text-[#C9A84C]" />
               </div>
               <div>
-                <p className="font-cinzel text-[10px] text-[#C9A84C] mb-1">{i.title}</p>
-                <p className="text-sm text-white/80 whitespace-pre-line">{i.text}</p>
+                <p className="font-cinzel text-[10px] text-[#C9A84C] mb-1 tracking-[0.3em]">{i.title}</p>
+                <p className="font-sans text-[15px] text-white/80 whitespace-pre-line leading-relaxed">{i.text}</p>
               </div>
             </div>
           ))}
