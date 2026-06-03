@@ -648,10 +648,19 @@ function Success({ id, category, subCategory, name }: { id: string; category: st
             <Row k="Sub-Category" v={subCategory} />
           </div>
         </div>
-        <div className="flex flex-wrap gap-3 justify-center mt-8">
-          <a href="#" className="btn-outline-gold"><Sparkles size={14} /> Share on LinkedIn</a>
-          <a href="#" className="btn-outline-gold"><Sparkles size={14} /> Twitter</a>
-          <a href="#" className="btn-outline-gold"><Sparkles size={14} /> WhatsApp</a>
+        <p className="font-cinzel text-[10px] text-[#C9A84C] mt-10 mb-3">Share Your Nomination</p>
+        <div className="flex flex-wrap gap-3 justify-center">
+          {(() => {
+            const text = `I'm proud to be nominated for BCS Ratna Award 2025 in ${category}! India's most prestigious media industry award. #BCSRatnaAward2025`;
+            const url = typeof window !== "undefined" ? window.location.origin : "https://bcsratnaaward.com";
+            return (
+              <>
+                <a target="_blank" rel="noopener" href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`} className="btn-outline-gold"><Linkedin size={14} /> LinkedIn</a>
+                <a target="_blank" rel="noopener" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`} className="btn-outline-gold"><Twitter size={14} /> Twitter / X</a>
+                <a target="_blank" rel="noopener" href={`https://wa.me/?text=${encodeURIComponent(text + " " + url)}`} className="btn-outline-gold"><MessageCircle size={14} /> WhatsApp</a>
+              </>
+            );
+          })()}
         </div>
         <div className="flex flex-wrap gap-3 justify-center mt-4">
           <button className="btn-gold"><Download size={14} /> Download Receipt</button>
