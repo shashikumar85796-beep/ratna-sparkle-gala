@@ -173,9 +173,9 @@ function NominateHero() {
           Register Your Nomination
         </h1>
         <div className="gold-divider" />
-        <p className="text-white/70 mt-4">Join India's Most Prestigious Media Industry Award</p>
+        <p className="text-white/70 mt-4">BCS Ratna Award 2025 — Nominations Now Open</p>
         <div className="flex flex-wrap gap-3 justify-center mt-8">
-          {["Secure Payment", "Official Recognition", "Expert Jury Panel"].map((t) => (
+          {["Secure Payment", "Official Certificate", "Expert Jury"].map((t) => (
             <span key={t} className="flex items-center gap-2 px-4 py-2 border border-[#C9A84C]/30 rounded-full font-cinzel text-[10px] text-[#C9A84C]">
               <Check size={14} /> {t}
             </span>
