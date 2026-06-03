@@ -336,7 +336,18 @@ function Step2({ form, setForm, errors, onBack, onNext }: {
             <input className={`${inputCls("mobile")} !rounded-l-none`} value={form.mobile} onChange={(e) => update("mobile", e.target.value.replace(/\D/g, "").slice(0, 10))} />
           </div>
         </Field>
-        <Field label="WhatsApp Number" helper="Optional — for award day coordination."><input className="input-gold" value={form.whatsapp} onChange={(e) => update("whatsapp", e.target.value)} /></Field>
+        <Field label="WhatsApp Number" helper="Optional — for award day coordination.">
+          <input
+            className="input-gold disabled:opacity-60"
+            disabled={form.whatsappSame}
+            value={form.whatsappSame ? form.mobile : form.whatsapp}
+            onChange={(e) => update("whatsapp", e.target.value.replace(/\D/g, "").slice(0, 10))}
+          />
+          <label className="mt-2 flex items-center gap-2 text-xs font-sans text-white/65 cursor-pointer">
+            <input type="checkbox" checked={form.whatsappSame} onChange={(e) => update("whatsappSame", e.target.checked)} className="w-3.5 h-3.5 accent-[#C9A84C]" />
+            Same as mobile number
+          </label>
+        </Field>
         <Field label="Official Website URL"><input className="input-gold" placeholder="https://" value={form.website} onChange={(e) => update("website", e.target.value)} /></Field>
       </Block>
 
