@@ -50,6 +50,7 @@ function HomePage() {
       <Categories />
       <Gallery />
       <WhyUs />
+      <VIPs />
       <Videos />
       <Chairman />
       <Partners />
@@ -347,22 +348,133 @@ function Chairman() {
   );
 }
 
-function Partners() {
-  const logos = ["Zee","Sony","Star Sports","Hathway","DEN","JioStar","Cisco","Tata Play","Airtel","Dish TV","Sun TV","Colors","Discovery","NDTV","Aaj Tak","ABP","India Today","Network18","Republic","TV9"];
-  const row = (dir: "normal" | "reverse") => (
-    <div className="flex overflow-hidden py-4">
-      <div className={`flex gap-12 shrink-0 ${dir === "normal" ? "animate-marquee" : "animate-marquee-reverse"}`}>
-        {[...logos, ...logos].map((l, i) => (
-          <div key={i} className="font-display text-2xl md:text-3xl text-white/40 hover:text-[#C9A84C] transition px-6 whitespace-nowrap">{l}</div>
-        ))}
+function VIPs() {
+  const vips = [
+    { name: "Sh. Anurag Thakur", title: "Former I&B Minister", org: "Government of India", since: "2018" },
+    { name: "Mr. Punit Goenka", title: "CEO", org: "Zee Entertainment", since: "2012" },
+    { name: "Mr. Sunil Lulla", title: "MD & CEO", org: "Eros STX", since: "2014" },
+    { name: "Ms. Shailja Kejriwal", title: "Chief Creative Officer", org: "Sony LIV", since: "2016" },
+    { name: "Mr. Harit Nagpal", title: "MD & CEO", org: "Tata Play", since: "2013" },
+    { name: "Mr. Saurabh Dhoot", title: "Chairman", org: "Videocon d2h", since: "2010" },
+    { name: "Mr. Anil Malhotra", title: "Former Chairman", org: "TRAI", since: "2015" },
+    { name: "Ms. Priya Nair", title: "VP Content", org: "JioStar", since: "2019" },
+  ];
+  return (
+    <section className="py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,168,76,0.08),transparent_70%)]" />
+      <div className="max-w-7xl mx-auto px-6 relative">
+        <div className="text-center mb-14">
+          <div className="flex items-center justify-center gap-4 mb-5">
+            <span className="h-px w-24 bg-gradient-to-r from-transparent to-[#C9A84C]" />
+            <span className="text-[#C9A84C] text-lg">◆</span>
+            <span className="h-px w-24 bg-gradient-to-l from-transparent to-[#C9A84C]" />
+          </div>
+          <p className="font-cinzel text-xs text-[#C9A84C] mb-3">Past Attendees</p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-gold-gradient leading-tight">
+            Industry Icons Who Graced BCS Ratna
+          </h2>
+          <div className="gold-divider" />
+          <p className="text-white/60 max-w-2xl mx-auto mt-4 text-base leading-relaxed">
+            Ministers, CEOs, and Media Veterans who have been part of our journey.
+          </p>
+        </div>
+        <div className="flex md:grid gap-5 md:grid-cols-2 lg:grid-cols-4 overflow-x-auto md:overflow-visible pb-4 md:pb-0 snap-x snap-mandatory">
+          {vips.map((v) => (
+            <div
+              key={v.name}
+              className="group relative bg-[#1A1A1A] rounded-2xl p-6 border border-[#C9A84C]/15 hover:border-[#C9A84C]/60 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_15px_50px_rgba(201,168,76,0.25)] min-w-[260px] md:min-w-0 snap-center text-center"
+            >
+              <div className="relative inline-block">
+                <div className="absolute -inset-1 rounded-full bg-gold-gradient opacity-30 blur-md group-hover:opacity-60 transition" />
+                <div className="relative w-[120px] h-[120px] rounded-full overflow-hidden border-[3px] border-[#C9A84C] bg-[#0d0d0d] flex items-center justify-center">
+                  <span className="font-display text-4xl text-gold-gradient font-bold">
+                    {v.name.split(" ").slice(-2).map(w => w[0]).join("")}
+                  </span>
+                </div>
+                <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-gold-gradient flex items-center justify-center text-black text-sm">
+                  ★
+                </div>
+              </div>
+              <h3 className="mt-5 font-display text-xl font-bold text-white leading-tight" style={{ fontFamily: '"Raleway", "DM Sans", sans-serif' }}>
+                {v.name}
+              </h3>
+              <p className="text-[15px] text-[#C9A84C] mt-1.5">{v.title}</p>
+              <p className="text-sm text-[#B0B0B0] mt-0.5">{v.org}</p>
+              <span className="inline-block mt-4 px-3 py-1 rounded-full text-[10px] font-cinzel bg-[#C9A84C]/15 text-[#C9A84C] border border-[#C9A84C]/30">
+                Since {v.since}
+              </span>
+            </div>
+          ))}
+        </div>
+        <div className="text-center mt-12">
+          <p className="text-white/55 text-sm mb-5">And 200+ more industry leaders across 14 years</p>
+          <Link to="/events" className="btn-outline-gold">View All Past Attendees</Link>
+        </div>
       </div>
+    </section>
+  );
+}
+
+function Partners() {
+  const title = ["Zee TV", "Sony Pictures", "Star Sports"];
+  const associate = ["Hathway", "DEN Networks", "JioStar", "Tata Play", "Dish TV"];
+  const others = [
+    "Cisco", "Airtel", "Sun TV", "Colors", "Discovery", "NDTV", "Aaj Tak", "ABP",
+    "India Today", "Network18", "Republic", "TV9", "Times Now", "CNN-News18",
+    "Bloomberg", "ET Now", "Mirror Now", "Zee News", "WION", "DD News",
+  ];
+  const ph = (label: string, w = 200, h = 80) =>
+    `https://placehold.co/${w}x${h}/1a1a1a/888888?text=${encodeURIComponent(label)}`;
+
+  const Card = ({ label, w, h, padding }: { label: string; w: number; h: number; padding: string }) => (
+    <div
+      className={`group bg-[#1A1A1A] rounded-xl ${padding} border border-transparent hover:border-[#C9A84C] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(201,168,76,0.3)] flex items-center justify-center`}
+    >
+      <img
+        src={ph(label, w, h)}
+        alt={label}
+        className="max-w-full h-auto grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300"
+        loading="lazy"
+      />
     </div>
   );
+
   return (
-    <section className="py-24 border-y border-[#C9A84C]/15">
-      <SectionTitle eyebrow="Trusted by" title="Our |Partners|" />
-      {row("normal")}
-      {row("reverse")}
+    <section className="py-24 md:py-32 border-y border-[#C9A84C]/15 bg-[#0a0a0a]">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-gold-gradient">OUR PARTNERS & SPONSORS</h2>
+          <div className="gold-divider" />
+          <p className="text-white/60 mt-4 text-base">Trusted by India's leading media and broadcast organisations.</p>
+        </div>
+
+        <div className="mb-14">
+          <p className="font-cinzel text-[13px] text-[#C9A84C] tracking-[0.3em] text-center mb-6">Title Partners</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {title.map((l) => <Card key={l} label={l} w={260} h={120} padding="p-10" />)}
+          </div>
+        </div>
+
+        <div className="mb-14">
+          <p className="font-cinzel text-[13px] text-[#C9A84C] tracking-[0.3em] text-center mb-6">Associate Partners</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
+            {associate.map((l) => <Card key={l} label={l} w={200} h={90} padding="p-6" />)}
+          </div>
+        </div>
+
+        <div>
+          <p className="font-cinzel text-[13px] text-[#C9A84C] tracking-[0.3em] text-center mb-6">Other Partners</p>
+          <div className="relative overflow-hidden marquee-group">
+            <div className="flex gap-5 marquee-track">
+              {[...others, ...others].map((l, i) => (
+                <div key={i} className="shrink-0 w-[180px]">
+                  <Card label={l} w={160} h={70} padding="p-4" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

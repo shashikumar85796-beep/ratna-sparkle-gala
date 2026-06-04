@@ -295,3 +295,11 @@
   border-radius: 8px;
 }
 
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+.marquee-group:hover .marquee-track {
+  animation-play-state: paused;
+}
