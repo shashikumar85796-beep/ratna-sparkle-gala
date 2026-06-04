@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Navigation } from "@/components/site/Navigation";
 import { Footer } from "@/components/site/Footer";
 import { GoldParticles } from "@/components/site/GoldParticles";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 import { Upload, Mail, Phone, Newspaper, Camera, Video, Check } from "lucide-react";
 
 export const Route = createFileRoute("/accreditation")({
@@ -76,6 +76,7 @@ function AccreditationPage() {
 
   return (
     <div className="bg-background min-h-screen">
+      <Toaster theme="dark" position="top-center" />
       <Navigation />
 
       <section className="relative pt-36 pb-20 overflow-hidden">
