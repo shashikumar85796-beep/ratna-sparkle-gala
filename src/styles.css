@@ -283,3 +283,23 @@
 }
 .counter-meta.near-limit { color: #C9A84C; }
 .counter-meta.at-limit { color: #E8A87C; }
+
+@keyframes goldShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.gold-skeleton {
+  background: linear-gradient(90deg, #1A1A1A 25%, #2A2A2A 50%, #1A1A1A 75%);
+  background-size: 200% 100%;
+  animation: goldShimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+.marquee-group:hover .marquee-track {
+  animation-play-state: paused;
+}

@@ -27,12 +27,11 @@ export function Footer() {
             { to: "/contact", label: "Contact" },
           ]} />
 
-          <FooterCol title="Categories" links={[
-            { to: "/categories", label: "Content Sector" },
-            { to: "/categories", label: "Distribution" },
-            { to: "/categories", label: "Technology" },
-            { to: "/categories", label: "Digital Platform" },
-            { to: "/categories", label: "Individual" },
+          <FooterCol title="Event Info" links={[
+            { to: "/schedule", label: "Schedule & Programme" },
+            { to: "/venue", label: "Venue & Directions" },
+            { to: "/accreditation", label: "Press Accreditation" },
+            { to: "/nominate", label: "Nominate Now" },
           ]} />
 
           <div>
