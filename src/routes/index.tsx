@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Award, Globe, Handshake, TrendingUp, Play, Quote } from "lucide-react";
+import { ArrowRight, Award, Globe, Handshake, TrendingUp, Play } from "lucide-react";
 import { Navigation } from "@/components/site/Navigation";
 import { Footer } from "@/components/site/Footer";
 import { GoldParticles } from "@/components/site/GoldParticles";
@@ -14,9 +14,43 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "BCS Ratna Award 2026 — India's Premier Broadcasting & Media Award" },
       { name: "description", content: "Celebrating Excellence in Broadcasting, Digital Media & Technology since 2010. Nominations open for BCS Ratna Award 2026." },
+      { name: "robots", content: "index, follow" },
       { property: "og:title", content: "BCS Ratna Award 2026" },
       { property: "og:description", content: "India's Most Prestigious Media Industry Award. Nominations Open." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://bcsratnaaward.com/" },
+      { property: "og:image", content: "/assets/BCS-Website-Logo.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "BCS Ratna Award 2026" },
+      { name: "twitter:description", content: "India's Most Prestigious Media Industry Award. Nominations Open." },
     ],
+    links: [{ rel: "canonical", href: "https://bcsratnaaward.com/" }],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "BCS Ratna Award",
+        "url": "https://bcsratnaaward.com",
+        "logo": "https://bcsratnaaward.com/assets/BCS-Website-Logo.png",
+        "description": "India's premier Broadcasting, Cable & Satellite industry award by Aavishkar Media Group.",
+        "foundingDate": "2010",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "B-263, Indra Nagar, Adarsh Nagar",
+          "addressLocality": "New Delhi",
+          "postalCode": "110033",
+          "addressCountry": "IN"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+91-9811120650",
+          "contactType": "customer service",
+          "email": "info@aavishkargroup.in"
+        },
+        "sameAs": []
+      })
+    }],
   }),
   component: HomePage,
 });
@@ -59,7 +93,6 @@ function HomePage() {
       <Videos />
       <Chairman />
       <Partners />
-      <Testimonials />
       <CtaBanner />
       <Footer />
     </div>
@@ -82,7 +115,7 @@ function Hero() {
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black" />
-      <GoldParticles count={50} />
+      <GoldParticles count={35} />
 
       {/* Trophy LEFT — gentle sway */}
       <div className="hero-trophy-wrap" style={{
@@ -487,23 +520,54 @@ function Chairman() {
       <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[#C9A84C]/10 blur-3xl" />
       <div className="max-w-6xl mx-auto px-6 relative">
         <SectionTitle eyebrow="Leadership" title="Chairman's |Message|" />
-        <div className="glass-card p-10 md:p-16 grid md:grid-cols-3 gap-10 items-center">
-          <div className="relative">
-            <div className="absolute -inset-2 bg-gold-gradient opacity-40 blur-xl" />
-            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80" alt="Chairman" className="relative w-full aspect-square object-cover border-2 border-[#C9A84C]/60" />
-          </div>
-          <div className="md:col-span-2">
-            <Quote size={48} className="text-[#C9A84C]/60" />
-            <p className="font-display italic text-xl md:text-2xl text-white/85 mt-4 leading-relaxed">
-              "For fifteen years we have stood as the conscience of the Indian broadcasting industry —
-              honouring the bold, the brilliant and the relentless. BCS Ratna is more than an award.
-              It is a promise that excellence will always be seen, celebrated and remembered."
-            </p>
-            <div className="mt-8">
-              <p className="font-display text-lg text-gold-gradient font-bold">R. K. Sharma</p>
-              <p className="font-cinzel text-[10px] text-white/60 mt-1">Chairman · Aavishkar Media Group</p>
+        <div className="glass-card p-10 md:p-14 grid md:grid-cols-3 gap-10 items-start">
+
+          {/* Photo */}
+          <div className="relative flex flex-col items-center text-center">
+            <div className="absolute -inset-2 bg-gold-gradient opacity-30 blur-xl rounded-xl" />
+            <img
+              src="/assets/DR SIR PIC.png"
+              alt="Chairman — Aavishkar Media Group"
+              className="relative w-full max-w-[280px] mx-auto object-cover object-top border-2 border-[#C9A84C]/60 rounded-xl"
+              style={{ aspectRatio: "3/4" }}
+            />
+            <div className="mt-5 relative">
+              <p className="font-display text-xl text-gold-gradient font-bold">R. K. Sharma</p>
+              <p className="font-cinzel text-[11px] text-white/60 mt-1 tracking-widest">Chairman · Aavishkar Media Group</p>
             </div>
           </div>
+
+          {/* Message */}
+          <div className="md:col-span-2">
+            <svg width="48" height="36" viewBox="0 0 48 36" fill="none" className="mb-6 opacity-60">
+              <path d="M0 36V22.5C0 15.9 1.8 10.5 5.4 6.3C9 2.1 13.8 0 19.8 0L21.6 3.6C17.4 4.8 14.1 7.2 11.7 10.8C9.3 14.4 8.1 18.3 8.1 22.5H18V36H0ZM27 36V22.5C27 15.9 28.8 10.5 32.4 6.3C36 2.1 40.8 0 46.8 0L48 3.6C43.8 4.8 40.5 7.2 38.1 10.8C35.7 14.4 34.5 18.3 34.5 22.5H44.1V36H27Z" fill="#C9A84C"/>
+            </svg>
+
+            <div className="space-y-4 text-white/80 leading-relaxed text-[15px]">
+              <p>
+                I can't express my ecstatic feelings while sharing it with you that the journey of the BCS Ratna Awards is completing one decade of praises and recognitions. It gives me great pleasure to formally offer you the opportunity to be a part of <span className="text-[#C9A84C] font-semibold">12th edition</span> of these esteemed awards.
+              </p>
+              <p>
+                Year-by-year, since its inception in <span className="text-[#C9A84C] font-semibold">2010</span>, these Awards have become a symbol of excellence in the fields of Broadcasting, Media, Digital Content, OTT, ISPs, IPTV, CATV, DTH, Distribution & Hardware & Software industry — setting a very high standard of benchmark in the entire Indian B&CS industry.
+              </p>
+              <p>
+                The BCS Ratna Awards provide a great opportunity for the partners to align their organisation and to develop a strong relationship with the industry stakeholders. The award nominees will be selected, shortlisted and judged by our industry people in an independent manner because these are the industry's own awards of their kind in the entire India.
+              </p>
+              <p>
+                The <span className="text-[#C9A84C] font-semibold">12th edition of BCS RATNA AWARDS</span> is going to be held in <span className="text-[#C9A84C] font-semibold">July–August 2026, New Delhi</span>. The BCS RATNA Awards are the biggest night in the entire Indian Broadcasting & CATV industry, attended by hundreds of Broadcasting VIPs, industry stalwarts, key officials from various ministries and all other stakeholders associated with this industry.
+              </p>
+              <p>
+                So it is a great chance for you to meet new clients, catch up with old ones and celebrate with the industry heavyweights.
+              </p>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-[#C9A84C]/20">
+              <p className="font-display italic text-[#C9A84C] text-lg">
+                "As the Chairman of Aavishkar Media Group, I cordially invite you to the 12th BCS RATNA Awards Ceremony & Gala Evening."
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -578,88 +642,64 @@ function VIPs() {
 }
 
 function Partners() {
-  const title = ["Zee TV", "Sony Pictures", "Star Sports"];
-  const associate = ["Hathway", "DEN Networks", "JioStar", "Tata Play", "Dish TV"];
-  const others = [
-    "Cisco", "Airtel", "Sun TV", "Colors", "Discovery", "NDTV", "Aaj Tak", "ABP",
-    "India Today", "Network18", "Republic", "TV9", "Times Now", "CNN-News18",
-    "Bloomberg", "ET Now", "Mirror Now", "Zee News", "WION", "DD News",
+  const sponsors = [
+    { src: "/assets/Sponsors/1. NDTV Logo (Black).png", alt: "NDTV" },
+    { src: "/assets/Sponsors/3.png", alt: "Sponsor" },
+    { src: "/assets/Sponsors/4.png", alt: "Sponsor" },
+    { src: "/assets/Sponsors/5.png", alt: "Sponsor" },
+    { src: "/assets/Sponsors/6.png", alt: "Sponsor" },
+    { src: "/assets/Sponsors/Aavishkar Media Pvt Ltd.png", alt: "Aavishkar Media" },
+    { src: "/assets/Sponsors/dangal.png", alt: "Dangal TV" },
+    { src: "/assets/Sponsors/GTPL.png", alt: "GTPL" },
+    { src: "/assets/Sponsors/JioStar_Service_logo_black.jpg", alt: "JioStar" },
+    { src: "/assets/Sponsors/Kerala Vision Digital TV 2 - Copy.png", alt: "Kerala Vision" },
+    { src: "/assets/Sponsors/khabar-fast.png", alt: "Khabar Fast" },
+    { src: "/assets/Sponsors/ptc.png", alt: "PTC" },
+    { src: "/assets/Sponsors/Sanskar.png", alt: "Sanskar TV" },
+    { src: "/assets/Sponsors/WhatsApp Image 2025-07-29 at 12.57.28 PM.jpeg", alt: "Sponsor" },
+    { src: "/assets/Sponsors/Z-Brandmark-Charcoal.png", alt: "Zee" },
   ];
-  const ph = (label: string, w = 200, h = 80) =>
-    `https://placehold.co/${w}x${h}/1a1a1a/888888?text=${encodeURIComponent(label)}`;
 
-  const Card = ({ label, w, h, padding }: { label: string; w: number; h: number; padding: string }) => (
-    <div
-      className={`group bg-[#1A1A1A] rounded-xl ${padding} border border-transparent hover:border-[#C9A84C] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(201,168,76,0.3)] flex items-center justify-center`}
-    >
-      <img
-        src={ph(label, w, h)}
-        alt={label}
-        className="max-w-full h-auto grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-300"
-        loading="lazy"
-      />
-    </div>
-  );
+  // Duplicate for seamless loop
+  const loop = [...sponsors, ...sponsors];
 
   return (
-    <section className="py-24 md:py-32 border-y border-[#C9A84C]/15 bg-[#0a0a0a]">
+    <section className="py-20 border-y border-[#C9A84C]/15 bg-[#0a0a0a] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-gold-gradient">OUR PARTNERS & SPONSORS</h2>
+        <div className="text-center mb-12">
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-gold-gradient">OUR PREVIOUS SPONSORS</h2>
           <div className="gold-divider" />
           <p className="text-white/60 mt-4 text-base">Trusted by India's leading media and broadcast organisations.</p>
         </div>
-
-        <div className="mb-14">
-          <p className="font-cinzel text-[13px] text-[#C9A84C] tracking-[0.3em] text-center mb-6">Title Partners</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {title.map((l) => <Card key={l} label={l} w={260} h={120} padding="p-10" />)}
-          </div>
-        </div>
-
-        <div className="mb-14">
-          <p className="font-cinzel text-[13px] text-[#C9A84C] tracking-[0.3em] text-center mb-6">Associate Partners</p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
-            {associate.map((l) => <Card key={l} label={l} w={200} h={90} padding="p-6" />)}
-          </div>
-        </div>
-
-        <div>
-          <p className="font-cinzel text-[13px] text-[#C9A84C] tracking-[0.3em] text-center mb-6">Other Partners</p>
-          <div className="relative overflow-hidden marquee-group">
-            <div className="flex gap-5 marquee-track">
-              {[...others, ...others].map((l, i) => (
-                <div key={i} className="shrink-0 w-[180px]">
-                  <Card label={l} w={160} h={70} padding="p-4" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
-    </section>
-  );
-}
 
-function Testimonials() {
-  const items = [
-    { quote: "Receiving the BCS Ratna was the proudest moment of my career — a true reflection of years of dedication.", name: "Anil Kapoor", role: "CEO, Vision Broadcasting" },
-    { quote: "There is no platform more credible in Indian broadcasting. The BCS Ratna jury sets the gold standard.", name: "Priya Mehta", role: "Founder, Streamly OTT" },
-    { quote: "An evening where the entire industry comes together to honour what truly matters — craft and courage.", name: "Rajesh Iyer", role: "MD, NorthStar Networks" },
-  ];
-  return (
-    <section className="py-24 md:py-32 bg-[#0d0d0d]">
-      <div className="max-w-7xl mx-auto px-6">
-        <SectionTitle eyebrow="Voices" title="What Leaders |Say|" />
-        <div className="grid md:grid-cols-3 gap-6">
-          {items.map((t) => (
-            <div key={t.name} className="glass-card p-8">
-              <Quote size={28} className="text-[#C9A84C]" />
-              <p className="font-display italic text-lg text-white/85 mt-4 leading-relaxed">"{t.quote}"</p>
-              <div className="mt-6 pt-6 border-t border-[#C9A84C]/20">
-                <p className="font-display text-lg text-gold-gradient font-bold">{t.name}</p>
-                <p className="font-cinzel text-[10px] text-white/55 mt-1">{t.role}</p>
-              </div>
+      {/* Auto-looping slider — no JS, pure CSS */}
+      <div className="relative overflow-hidden">
+        {/* Left fade */}
+        <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to right, #0a0a0a, transparent)" }} />
+        {/* Right fade */}
+        <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to left, #0a0a0a, transparent)" }} />
+
+        <div className="sponsors-track flex gap-6 items-center">
+          {loop.map((s, i) => (
+            <div
+              key={i}
+              className="shrink-0 flex items-center justify-center bg-white rounded-xl"
+              style={{ width: "200px", height: "110px", padding: "16px 20px" }}
+            >
+              <img
+                src={s.src}
+                alt={s.alt}
+                loading="lazy"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                  display: "block",
+                }}
+              />
             </div>
           ))}
         </div>
@@ -670,10 +710,12 @@ function Testimonials() {
 
 function CtaBanner() {
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative overflow-hidden" style={{ paddingTop: "96px", paddingBottom: "0" }}>
       <div className="absolute inset-0 bg-gold-gradient opacity-95" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent,rgba(0,0,0,0.6))]" />
-      <div className="relative max-w-4xl mx-auto px-6 text-center">
+      {/* Dark fade at bottom to separate from footer */}
+      <div className="absolute bottom-0 left-0 right-0 h-16" style={{ background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.8))" }} />
+      <div className="relative max-w-4xl mx-auto px-6 text-center pb-24">
         <p className="font-cinzel text-xs text-black/80 mb-4">Nominations Now Open</p>
         <h2 className="font-display text-3xl md:text-5xl font-black text-black leading-tight">
           BCS Ratna Award 2026

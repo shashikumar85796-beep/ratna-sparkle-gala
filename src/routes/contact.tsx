@@ -11,7 +11,16 @@ export const Route = createFileRoute("/contact")({
     meta: [
       { title: "Contact Us — BCS Ratna Award" },
       { name: "description", content: "Get in touch with the BCS Ratna Award team. New Delhi office, phone, email and contact form." },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: "Contact Us — BCS Ratna Award" },
+      { property: "og:description", content: "Get in touch with the BCS Ratna Award team. New Delhi office, phone and email." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://bcsratnaaward.com/contact" },
+      { property: "og:image", content: "/assets/BCS-Website-Logo.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Contact BCS Ratna Award Team" },
     ],
+    links: [{ rel: "canonical", href: "https://bcsratnaaward.com/contact" }],
   }),
   component: ContactPage,
 });

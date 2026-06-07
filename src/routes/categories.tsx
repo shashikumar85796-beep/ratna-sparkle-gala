@@ -9,8 +9,18 @@ export const Route = createFileRoute("/categories")({
   head: () => ({
     meta: [
       { title: "Award Categories — BCS Ratna 2026" },
-      { name: "description", content: "Explore all six sectors honoured at the BCS Ratna Awards — Content, Distribution, Technology, Digital Platform, Creators and Individual." },
+      { name: "description", content: "Six award sectors: Content, Distribution, Technology, Digital Platform, Creator and Individual. Nominate across 30+ sub-categories." },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: "Award Categories — BCS Ratna 2026" },
+      { property: "og:description", content: "Six award sectors: Content, Distribution, Technology, Digital Platform, Creator and Individual. Nominate across 30+ sub-categories." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://bcsratnaaward.com/categories" },
+      { property: "og:image", content: "/assets/BCS-Website-Logo.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Award Categories — BCS Ratna 2026" },
+      { name: "twitter:description", content: "Six award sectors across India's broadcasting and digital ecosystem." },
     ],
+    links: [{ rel: "canonical", href: "https://bcsratnaaward.com/categories" }],
   }),
   component: CategoriesPage,
 });

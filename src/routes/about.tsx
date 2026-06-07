@@ -10,7 +10,17 @@ export const Route = createFileRoute("/about")({
     meta: [
       { title: "About BCS Ratna Award — Aavishkar Media Group" },
       { name: "description", content: "Fifteen years of honouring excellence in India's broadcasting, cable, satellite and digital media industry." },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: "About BCS Ratna Award — Aavishkar Media Group" },
+      { property: "og:description", content: "Fifteen years of honouring excellence in India's broadcasting, cable, satellite and digital media industry." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://bcsratnaaward.com/about" },
+      { property: "og:image", content: "/assets/BCS-Website-Logo.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "About BCS Ratna Award — Aavishkar Media Group" },
+      { name: "twitter:description", content: "Fifteen years of honouring excellence in India's broadcasting, cable, satellite and digital media industry." },
     ],
+    links: [{ rel: "canonical", href: "https://bcsratnaaward.com/about" }],
   }),
   component: AboutPage,
 });

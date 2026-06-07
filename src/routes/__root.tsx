@@ -73,6 +73,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "BCS Ratna Award — India's Premier Broadcasting & Media Award" },
       { name: "description", content: "BCS Ratna Award by Aavishkar Media Group — celebrating excellence in Broadcasting, Cable, Satellite, Digital Media & Technology since 2010." },
       { name: "author", content: "Aavishkar Media Group" },
+      { name: "robots", content: "index, follow" },
+      { name: "theme-color", content: "#C9A84C" },
       { property: "og:title", content: "BCS Ratna Award — India's Premier Broadcasting & Media Award" },
       { property: "og:description", content: "BCS Ratna Award by Aavishkar Media Group — celebrating excellence in Broadcasting, Cable, Satellite, Digital Media & Technology since 2010." },
       { property: "og:type", content: "website" },

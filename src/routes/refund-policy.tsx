@@ -6,8 +6,12 @@ export const Route = createFileRoute("/refund-policy")({
   head: () => ({
     meta: [
       { title: "Refund Policy — BCS Ratna Award 2026" },
-      { name: "description", content: "Refund Policy for BCS Ratna Award 2026 nominations." },
+      { name: "description", content: "Refund Policy for BCS Ratna Award 2026 nominations. Non-refundable policy with exceptions." },
+      { name: "robots", content: "noindex, follow" },
+      { property: "og:title", content: "Refund Policy — BCS Ratna Award 2026" },
+      { property: "og:url", content: "https://bcsratnaaward.com/refund-policy" },
     ],
+    links: [{ rel: "canonical", href: "https://bcsratnaaward.com/refund-policy" }],
   }),
   component: RefundPolicyPage,
 });

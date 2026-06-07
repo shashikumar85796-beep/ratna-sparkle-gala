@@ -6,8 +6,12 @@ export const Route = createFileRoute("/privacy-policy")({
   head: () => ({
     meta: [
       { title: "Privacy Policy — BCS Ratna Award 2026" },
-      { name: "description", content: "Privacy Policy for BCS Ratna Award 2026 nominations." },
+      { name: "description", content: "Privacy Policy for BCS Ratna Award 2026 nominations. How we collect, use and protect your data." },
+      { name: "robots", content: "noindex, follow" },
+      { property: "og:title", content: "Privacy Policy — BCS Ratna Award 2026" },
+      { property: "og:url", content: "https://bcsratnaaward.com/privacy-policy" },
     ],
+    links: [{ rel: "canonical", href: "https://bcsratnaaward.com/privacy-policy" }],
   }),
   component: PrivacyPolicyPage,
 });

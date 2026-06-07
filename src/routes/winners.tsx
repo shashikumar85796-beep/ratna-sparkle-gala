@@ -11,7 +11,17 @@ export const Route = createFileRoute("/winners")({
     meta: [
       { title: "Hall of Fame — BCS Ratna Award Winners" },
       { name: "description", content: "Celebrating all past winners of BCS Ratna Award — India's premier broadcasting and media industry honour since 2010." },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: "Hall of Fame — BCS Ratna Award Winners" },
+      { property: "og:description", content: "Celebrating all past winners of BCS Ratna Award — India's premier broadcasting and media industry honour since 2010." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://bcsratnaaward.com/winners" },
+      { property: "og:image", content: "/assets/BCS-Website-Logo.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Hall of Fame — BCS Ratna Award Winners" },
+      { name: "twitter:description", content: "India's premier broadcasting award winners since 2010." },
     ],
+    links: [{ rel: "canonical", href: "https://bcsratnaaward.com/winners" }],
   }),
   component: WinnersPage,
 });

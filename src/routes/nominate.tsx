@@ -14,7 +14,17 @@ export const Route = createFileRoute("/nominate")({
     meta: [
       { title: "Register Your Nomination — BCS Ratna Award 2026" },
       { name: "description", content: "Secure your nomination for India's most prestigious media award. Choose your category and complete registration." },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: "Register Your Nomination — BCS Ratna Award 2026" },
+      { property: "og:description", content: "Secure your nomination for India's most prestigious media award. Nominations close June 30, 2026." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://bcsratnaaward.com/nominate" },
+      { property: "og:image", content: "/assets/BCS-Website-Logo.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Register Your Nomination — BCS Ratna Award 2026" },
+      { name: "twitter:description", content: "India's most prestigious media award. Secure your nomination before June 30, 2026." },
     ],
+    links: [{ rel: "canonical", href: "https://bcsratnaaward.com/nominate" }],
   }),
   validateSearch: (search: Record<string, unknown>) => ({
     category: typeof search.category === "string" ? search.category : undefined,

@@ -70,15 +70,18 @@
 /* ── BASE ──────────────────────────────────────────── */
 @layer base {
   * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; font-size: 17px; }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
   h1, h2, h3, h4 { font-family: var(--font-display); }
+  p { font-size: 1rem; line-height: 1.75; }
   ::selection { background: #C9A84C; color: #0A0A0A; }
   img { max-width: 100%; height: auto; }
 }
@@ -201,11 +204,11 @@
   background-size: 200% 200%;
   color: #0A0A0A;
   font-weight: 800;
-  padding: 0.875rem 2rem;
+  padding: 0.95rem 2.2rem;
   border-radius: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-family: "Raleway", sans-serif;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-position 0.4s ease;
   display: inline-flex;
@@ -226,11 +229,11 @@
   color: #C9A84C;
   border: 1px solid #C9A84C;
   font-weight: 800;
-  padding: 0.875rem 2rem;
+  padding: 0.95rem 2.2rem;
   border-radius: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-family: "Raleway", sans-serif;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   display: inline-flex;
@@ -248,13 +251,13 @@
 .nominate-btn {
   font-family: 'Raleway', sans-serif;
   font-weight: 800;
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 2px;
   text-transform: uppercase;
   background: linear-gradient(135deg, #BF953F, #C9A84C, #B38728);
   color: #000;
   border: none;
-  padding: 12px 28px;
+  padding: 13px 30px;
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(201,168,76,0.35);
@@ -274,8 +277,8 @@
 .nav2-link {
   font-family: 'Raleway', sans-serif;
   font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 2.5px;
+  font-size: 15px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: #CCCCCC;
   text-decoration: none;
@@ -340,12 +343,12 @@
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(201,168,76,0.3);
   color: #fff;
-  padding: 0.875rem 1rem;
+  padding: 0.95rem 1.1rem;
   border-radius: 10px;
   width: 100%;
   font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.6;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .input-gold:focus {
@@ -376,7 +379,7 @@ select option:checked { background-color: #C9A84C !important; color: #000 !impor
 .field-label {
   display: block;
   font-family: "Open Sans", sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: rgba(255,255,255,0.85);
@@ -384,7 +387,7 @@ select option:checked { background-color: #C9A84C !important; color: #000 !impor
 }
 .field-label .req { color: #C9A84C; margin-left: 0.25rem; }
 .field-helper {
-  font-size: 14px;
+  font-size: 13px;
   color: rgba(255,255,255,0.45);
   margin-top: 0.4rem;
   line-height: 1.5;
@@ -393,7 +396,7 @@ select option:checked { background-color: #C9A84C !important; color: #000 !impor
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: #E8A87C;
   margin-top: 0.4rem;
@@ -407,7 +410,7 @@ select option:checked { background-color: #C9A84C !important; color: #000 !impor
   background: linear-gradient(90deg, #E27D60, transparent);
 }
 .counter-meta {
-  font-size: 14px;
+  font-size: 13px;
   color: rgba(255,255,255,0.45);
   margin-top: 0.4rem;
   text-align: right;
@@ -430,6 +433,20 @@ select option:checked { background-color: #C9A84C !important; color: #000 !impor
   width: max-content;
 }
 .marquee-group:hover .marquee-track { animation-play-state: paused; }
+
+/* ── SPONSORS SLIDER ───────────────────────────────── */
+.sponsors-track {
+  width: max-content;
+  animation: sponsorsScroll 35s linear infinite;
+}
+.sponsors-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes sponsorsScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
 /* ── TROPHY — HERO ─────────────────────────────────── */
 .hero-trophy-wrap {
@@ -496,12 +513,12 @@ footer > *:not(.footer-trophy) { position: relative; z-index: 1; }
 }
 
 @media (max-width: 640px) {
-  h1 { font-size: 2rem !important; }
-  h2 { font-size: 1.5rem !important; }
+  h1 { font-size: 2.2rem !important; }
+  h2 { font-size: 1.6rem !important; }
 
   .btn-gold, .btn-outline-gold {
-    font-size: 14px;
-    padding: 14px 28px;
+    font-size: 13px;
+    padding: 13px 24px;
     min-height: 48px;
   }
 
@@ -512,7 +529,7 @@ footer > *:not(.footer-trophy) { position: relative; z-index: 1; }
 }
 
 /* Touch targets */
-input, textarea, select { min-height: 52px; font-size: 16px !important; }
+input, textarea, select { min-height: 52px; font-size: 15px !important; }
 button, a, [role="button"] { min-width: 44px; min-height: 44px; }
 
 /* ── ACCESSIBILITY ─────────────────────────────────── */

@@ -6,8 +6,12 @@ export const Route = createFileRoute("/terms-conditions")({
   head: () => ({
     meta: [
       { title: "Terms & Conditions — BCS Ratna Award 2026" },
-      { name: "description", content: "Terms & Conditions for BCS Ratna Award 2026 nominations." },
+      { name: "description", content: "Terms & Conditions for BCS Ratna Award 2026 nominations. Read before submitting your nomination." },
+      { name: "robots", content: "noindex, follow" },
+      { property: "og:title", content: "Terms & Conditions — BCS Ratna Award 2026" },
+      { property: "og:url", content: "https://bcsratnaaward.com/terms-conditions" },
     ],
+    links: [{ rel: "canonical", href: "https://bcsratnaaward.com/terms-conditions" }],
   }),
   component: TermsConditionsPage,
 });

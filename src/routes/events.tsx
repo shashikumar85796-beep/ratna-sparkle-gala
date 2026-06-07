@@ -11,7 +11,17 @@ export const Route = createFileRoute("/events")({
     meta: [
       { title: "Past Events — BCS Ratna Award Editions" },
       { name: "description", content: "Relive every edition of the BCS Ratna Award from 2010 to 2024 — galleries, winners and highlights." },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: "Past Events — BCS Ratna Award Editions" },
+      { property: "og:description", content: "Relive every edition of the BCS Ratna Award from 2010 to 2024 — galleries, winners and highlights." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://bcsratnaaward.com/events" },
+      { property: "og:image", content: "/assets/BCS-Website-Logo.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Past Events — BCS Ratna Award Editions" },
+      { name: "twitter:description", content: "15 years of award ceremonies — galleries and highlights." },
     ],
+    links: [{ rel: "canonical", href: "https://bcsratnaaward.com/events" }],
   }),
   validateSearch: (search: Record<string, unknown>): { manage?: boolean } => ({
     manage: search.manage === "true" ? true : undefined,
