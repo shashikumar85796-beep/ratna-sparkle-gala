@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown } from "lucide-react";
 
 const links = [
   { to: "/about", label: "About" },
@@ -9,17 +8,9 @@ const links = [
   { to: "/winners", label: "Winners" },
 ] as const;
 
-const eventInfoLinks = [
-  { to: "/schedule", label: "Schedule & Programme" },
-  { to: "/venue", label: "Venue & Directions" },
-  { to: "/accreditation", label: "Press Accreditation" },
-] as const;
-
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
-  const [drawerEventOpen, setDrawerEventOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -150,94 +141,7 @@ export function Navigation() {
             </Link>
           ))}
 
-          {/* Event Info Dropdown */}
-          <div
-            style={{ position: "relative", display: "flex", alignItems: "center", height: "100%" }}
-            onMouseEnter={() => setDropdown(true)}
-            onMouseLeave={() => setDropdown(false)}
-          >
-            <button
-              className="nav2-link"
-              style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "4px",
-                height: "100%",
-                whiteSpace: "nowrap",
-                lineHeight: 1,
-                padding: "4px 0",
-              }}
-              aria-expanded={dropdown}
-            >
-              Event Info
-              <ChevronDown
-                size={11}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  marginLeft: "4px",
-                  verticalAlign: "middle",
-                  lineHeight: 1,
-                  transition: "transform 0.25s ease",
-                  transform: dropdown ? "rotate(180deg)" : "rotate(0deg)",
-                  flexShrink: 0,
-                }}
-              />
-            </button>
-
-            {dropdown && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "100%",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: "rgba(8,8,8,0.97)",
-                  backdropFilter: "blur(20px)",
-                  border: "1px solid rgba(201,168,76,0.2)",
-                  borderTop: "none",
-                  borderRadius: "0 0 14px 14px",
-                  minWidth: "220px",
-                  padding: "6px 0",
-                  boxShadow: "0 16px 40px rgba(0,0,0,0.7)",
-                  zIndex: 200,
-                }}
-              >
-                {eventInfoLinks.map((l) => (
-                  <Link
-                    key={l.to}
-                    to={l.to}
-                    onClick={() => setDropdown(false)}
-                    style={{
-                      display: "block",
-                      padding: "12px 20px",
-                      fontFamily: "'Raleway', sans-serif",
-                      fontWeight: 700,
-                      fontSize: "11px",
-                      letterSpacing: "1.5px",
-                      textTransform: "uppercase",
-                      color: "#CCCCCC",
-                      textDecoration: "none",
-                      transition: "color 0.2s ease, background 0.2s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = "#C9A84C";
-                      e.currentTarget.style.background = "rgba(201,168,76,0.07)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "#CCCCCC";
-                      e.currentTarget.style.background = "transparent";
-                    }}
-                  >
-                    {l.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
+          {/* Event Info Dropdown temporarily disabled */}
 
           <Link
             to="/contact"
@@ -434,68 +338,7 @@ export function Navigation() {
             </Link>
           ))}
 
-          {/* Event Info accordion */}
-          <div>
-            <button
-              onClick={() => setDrawerEventOpen((v) => !v)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                width: "100%",
-                padding: "16px 24px",
-                fontFamily: "'Raleway', sans-serif",
-                fontWeight: 700,
-                fontSize: "13px",
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                color: "#FFFFFF",
-                borderBottom: "1px solid rgba(255,255,255,0.05)",
-                background: "none",
-                border: "none",
-                borderBottom2: "1px solid rgba(255,255,255,0.05)",
-                cursor: "pointer",
-                transition: "color 0.2s",
-              } as React.CSSProperties}
-            >
-              <span>Event Info</span>
-              <ChevronDown
-                size={14}
-                style={{
-                  color: "#C9A84C",
-                  transition: "transform 0.25s ease",
-                  transform: drawerEventOpen ? "rotate(180deg)" : "rotate(0deg)",
-                }}
-              />
-            </button>
-            {drawerEventOpen && (
-              <div style={{ borderBottom: "1px solid rgba(255,255,255,0.05)", background: "rgba(201,168,76,0.03)" }}>
-                {eventInfoLinks.map((l) => (
-                  <Link
-                    key={l.to}
-                    to={l.to}
-                    onClick={() => setDrawerOpen(false)}
-                    style={{
-                      display: "block",
-                      padding: "13px 24px 13px 40px",
-                      fontFamily: "'Raleway', sans-serif",
-                      fontWeight: 600,
-                      fontSize: "11px",
-                      letterSpacing: "1.5px",
-                      textTransform: "uppercase",
-                      color: "#AAAAAA",
-                      textDecoration: "none",
-                      transition: "color 0.2s",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A84C")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "#AAAAAA")}
-                  >
-                    {l.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
+          {/* Event Info accordion temporarily disabled */}
 
           <Link
             to="/contact"
