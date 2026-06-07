@@ -5,7 +5,7 @@ const links = [
   { to: "/about", label: "About" },
   { to: "/categories", label: "Categories" },
   { to: "/events", label: "Past Events" },
-  { to: "/winners", label: "Winners" },
+  // Winners menu item temporarily disabled.
 ] as const;
 
 export function Navigation() {

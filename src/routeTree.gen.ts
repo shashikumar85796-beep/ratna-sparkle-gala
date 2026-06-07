@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WinnersRouteImport } from './routes/winners'
 import { Route as VenueRouteImport } from './routes/venue'
 import { Route as TermsConditionsRouteImport } from './routes/terms-conditions'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -24,11 +23,6 @@ import { Route as AccreditationRouteImport } from './routes/accreditation'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
-const WinnersRoute = WinnersRouteImport.update({
-  id: '/winners',
-  path: '/winners',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const VenueRoute = VenueRouteImport.update({
   id: '/venue',
   path: '/venue',
@@ -109,7 +103,6 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms-conditions': typeof TermsConditionsRoute
   '/venue': typeof VenueRoute
-  '/winners': typeof WinnersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -125,7 +118,6 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms-conditions': typeof TermsConditionsRoute
   '/venue': typeof VenueRoute
-  '/winners': typeof WinnersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -142,7 +134,6 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms-conditions': typeof TermsConditionsRoute
   '/venue': typeof VenueRoute
-  '/winners': typeof WinnersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -160,7 +151,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms-conditions'
     | '/venue'
-    | '/winners'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -176,7 +166,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms-conditions'
     | '/venue'
-    | '/winners'
   id:
     | '__root__'
     | '/'
@@ -192,7 +181,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms-conditions'
     | '/venue'
-    | '/winners'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -209,18 +197,10 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsConditionsRoute: typeof TermsConditionsRoute
   VenueRoute: typeof VenueRoute
-  WinnersRoute: typeof WinnersRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/winners': {
-      id: '/winners'
-      path: '/winners'
-      fullPath: '/winners'
-      preLoaderRoute: typeof WinnersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/venue': {
       id: '/venue'
       path: '/venue'
@@ -329,7 +309,6 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsConditionsRoute: TermsConditionsRoute,
   VenueRoute: VenueRoute,
-  WinnersRoute: WinnersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
