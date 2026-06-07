@@ -1,21 +1,45 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Twitter, Youtube } from "lucide-react";
+import trophyImg from "@/assets/Trophy.png";
+import logoTextImg from "@/assets/BCS-Website-Logo.png";
 
 export function Footer() {
   return (
     <footer className="bg-black border-t border-[#C9A84C]/20 pt-20 pb-8 relative overflow-hidden">
+      <img
+        src={trophyImg}
+        alt=""
+        aria-hidden="true"
+        className="footer-trophy footer-trophy-left"
+      />
+      <img
+        src={trophyImg}
+        alt=""
+        aria-hidden="true"
+        className="footer-trophy footer-trophy-right"
+      />
       <div className="absolute inset-x-0 top-0 h-px bg-gold-gradient" />
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 pb-12 border-b border-[#C9A84C]/15">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 pb-12 border-b border-[#C9A84C]/15">
           <div className="lg:col-span-2">
-            <div className="text-3xl font-display font-bold text-gold-gradient">BCS RATNA</div>
-            <p className="font-cinzel text-[10px] text-[#C9A84C] tracking-[0.3em] mt-1">AWARD · SINCE 2010</p>
-            <p className="text-sm text-white/60 mt-6 leading-relaxed max-w-sm">
+            <img
+              src={logoTextImg}
+              alt="BCS Ratna Award"
+              style={{ height: "60px", width: "auto", objectFit: "contain" }}
+              className="mb-2"
+            />
+            <p style={{ fontFamily: "'Raleway', sans-serif", fontSize: "13px", color: "#B0B0B0", letterSpacing: "2px", textTransform: "uppercase", marginTop: "8px" }}>
+              Broadcasting | Content | Social
+            </p>
+            <p style={{ fontFamily: "'Open Sans', sans-serif", fontSize: "12px", color: "#666666", marginTop: "4px" }}>
+              by Aavishkar Media Pvt. Ltd.
+            </p>
+            <p className="text-sm text-white/60 mt-4 leading-relaxed max-w-sm">
               India's most prestigious Broadcasting, Cable & Satellite industry award by Aavishkar Media Group.
             </p>
-            <form className="mt-6 flex gap-2 max-w-sm" onSubmit={(e) => e.preventDefault()}>
-              <input type="email" placeholder="Your email" className="input-gold !py-2.5 text-sm" />
-              <button className="btn-gold !py-2.5 !px-4 text-[10px]">Subscribe</button>
+            <form className="mt-6 flex flex-col sm:flex-row gap-2 max-w-sm" onSubmit={(e) => e.preventDefault()}>
+              <input type="email" placeholder="Your email" className="input-gold text-sm flex-1" style={{ minHeight: "48px", fontSize: "15px" }} />
+              <button className="btn-gold font-cinzel" style={{ minWidth: "130px", whiteSpace: "nowrap", padding: "12px 20px", fontSize: "14px", height: "48px" }}>SUBSCRIBE</button>
             </form>
           </div>
 
@@ -34,6 +58,12 @@ export function Footer() {
             { to: "/nominate", label: "Nominate Now" },
           ]} />
 
+          <FooterCol title="Legal" links={[
+            { to: "/privacy-policy", label: "Privacy Policy" },
+            { to: "/terms-conditions", label: "Terms & Conditions" },
+            { to: "/refund-policy", label: "Refund Policy" },
+          ]} />
+
           <div>
             <h4 className="font-cinzel text-xs text-[#C9A84C] mb-5">Reach Us</h4>
             <ul className="space-y-3 text-sm text-white/65">
@@ -46,7 +76,7 @@ export function Footer() {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8">
           <p className="text-xs text-white/50 text-center md:text-left">
-            © 2025 BCS Ratna Award · Aavishkar Media Pvt. Ltd. · All Rights Reserved
+            © 2026 BCS Ratna Award · Aavishkar Media Pvt. Ltd. · All Rights Reserved
           </p>
           <div className="flex gap-4">
             {[Facebook, Twitter, Instagram, Linkedin, Youtube].map((Icon, i) => (

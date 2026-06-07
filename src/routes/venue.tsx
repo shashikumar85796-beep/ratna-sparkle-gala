@@ -24,7 +24,7 @@ function VenuePage() {
     <div className="bg-background min-h-screen">
       <Navigation />
 
-      <section className="relative pt-36 pb-20 overflow-hidden">
+      <section className="relative pt-[70px] md:pt-[148px] pb-20 overflow-hidden">
         <GoldParticles count={30} />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,168,76,0.18),transparent_60%)]" />
         <div className="relative max-w-4xl mx-auto px-6 text-center">
@@ -140,7 +140,7 @@ function VenuePage() {
             <a href="tel:+919811120650" className="inline-flex items-center gap-2 hover:text-[#C9A84C]"><Phone size={16} /> +91-9811120650</a>
           </div>
           <div className="mt-8 flex gap-3 justify-center">
-            <Link to="/nominate" className="btn-gold">Nominate Now</Link>
+            <Link to="/nominate" search={{ category: undefined }} className="btn-gold">Nominate Now</Link>
             <Link to="/schedule" className="btn-outline-gold">View Schedule</Link>
           </div>
         </div>

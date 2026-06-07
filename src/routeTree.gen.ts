@@ -9,9 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WinnersRouteImport } from './routes/winners'
 import { Route as VenueRouteImport } from './routes/venue'
+import { Route as TermsConditionsRouteImport } from './routes/terms-conditions'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ScheduleRouteImport } from './routes/schedule'
+import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as NominateRouteImport } from './routes/nominate'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -19,10 +23,34 @@ import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as AccreditationRouteImport } from './routes/accreditation'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminWinnersRouteImport } from './routes/admin/winners'
+import { Route as AdminVideosRouteImport } from './routes/admin/videos'
+import { Route as AdminTestimonialsRouteImport } from './routes/admin/testimonials'
+import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
+import { Route as AdminPaymentsRouteImport } from './routes/admin/payments'
+import { Route as AdminPastEventsRouteImport } from './routes/admin/past-events'
+import { Route as AdminPartnersRouteImport } from './routes/admin/partners'
+import { Route as AdminNominationsRouteImport } from './routes/admin/nominations'
+import { Route as AdminGalleryRouteImport } from './routes/admin/gallery'
+import { Route as AdminExportRouteImport } from './routes/admin/export'
+import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
+import { Route as AdminAttendeesRouteImport } from './routes/admin/attendees'
+import { Route as AdminNominationsIdRouteImport } from './routes/admin/nominations.$id'
 
+const WinnersRoute = WinnersRouteImport.update({
+  id: '/winners',
+  path: '/winners',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VenueRoute = VenueRouteImport.update({
   id: '/venue',
   path: '/venue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsConditionsRoute = TermsConditionsRouteImport.update({
+  id: '/terms-conditions',
+  path: '/terms-conditions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -33,6 +61,16 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const ScheduleRoute = ScheduleRouteImport.update({
   id: '/schedule',
   path: '/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundPolicyRoute = RefundPolicyRouteImport.update({
+  id: '/refund-policy',
+  path: '/refund-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NominateRoute = NominateRouteImport.update({
@@ -70,6 +108,76 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminWinnersRoute = AdminWinnersRouteImport.update({
+  id: '/admin/winners',
+  path: '/admin/winners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminVideosRoute = AdminVideosRouteImport.update({
+  id: '/admin/videos',
+  path: '/admin/videos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTestimonialsRoute = AdminTestimonialsRouteImport.update({
+  id: '/admin/testimonials',
+  path: '/admin/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/admin/payments',
+  path: '/admin/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPastEventsRoute = AdminPastEventsRouteImport.update({
+  id: '/admin/past-events',
+  path: '/admin/past-events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPartnersRoute = AdminPartnersRouteImport.update({
+  id: '/admin/partners',
+  path: '/admin/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminNominationsRoute = AdminNominationsRouteImport.update({
+  id: '/admin/nominations',
+  path: '/admin/nominations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminGalleryRoute = AdminGalleryRouteImport.update({
+  id: '/admin/gallery',
+  path: '/admin/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminExportRoute = AdminExportRouteImport.update({
+  id: '/admin/export',
+  path: '/admin/export',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAttendeesRoute = AdminAttendeesRouteImport.update({
+  id: '/admin/attendees',
+  path: '/admin/attendees',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminNominationsIdRoute = AdminNominationsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminNominationsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -79,9 +187,27 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/nominate': typeof NominateRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms-conditions': typeof TermsConditionsRoute
   '/venue': typeof VenueRoute
+  '/winners': typeof WinnersRoute
+  '/admin/attendees': typeof AdminAttendeesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/export': typeof AdminExportRoute
+  '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/nominations': typeof AdminNominationsRouteWithChildren
+  '/admin/partners': typeof AdminPartnersRoute
+  '/admin/past-events': typeof AdminPastEventsRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/admin/videos': typeof AdminVideosRoute
+  '/admin/winners': typeof AdminWinnersRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/nominations/$id': typeof AdminNominationsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -91,9 +217,27 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/nominate': typeof NominateRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms-conditions': typeof TermsConditionsRoute
   '/venue': typeof VenueRoute
+  '/winners': typeof WinnersRoute
+  '/admin/attendees': typeof AdminAttendeesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/export': typeof AdminExportRoute
+  '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/nominations': typeof AdminNominationsRouteWithChildren
+  '/admin/partners': typeof AdminPartnersRoute
+  '/admin/past-events': typeof AdminPastEventsRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/admin/videos': typeof AdminVideosRoute
+  '/admin/winners': typeof AdminWinnersRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/nominations/$id': typeof AdminNominationsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -104,9 +248,27 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/nominate': typeof NominateRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/schedule': typeof ScheduleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms-conditions': typeof TermsConditionsRoute
   '/venue': typeof VenueRoute
+  '/winners': typeof WinnersRoute
+  '/admin/attendees': typeof AdminAttendeesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/export': typeof AdminExportRoute
+  '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/nominations': typeof AdminNominationsRouteWithChildren
+  '/admin/partners': typeof AdminPartnersRoute
+  '/admin/past-events': typeof AdminPastEventsRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/admin/videos': typeof AdminVideosRoute
+  '/admin/winners': typeof AdminWinnersRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/nominations/$id': typeof AdminNominationsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -118,9 +280,27 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/nominate'
+    | '/privacy-policy'
+    | '/refund-policy'
     | '/schedule'
     | '/sitemap.xml'
+    | '/terms-conditions'
     | '/venue'
+    | '/winners'
+    | '/admin/attendees'
+    | '/admin/dashboard'
+    | '/admin/export'
+    | '/admin/gallery'
+    | '/admin/nominations'
+    | '/admin/partners'
+    | '/admin/past-events'
+    | '/admin/payments'
+    | '/admin/settings'
+    | '/admin/testimonials'
+    | '/admin/videos'
+    | '/admin/winners'
+    | '/admin/'
+    | '/admin/nominations/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -130,9 +310,27 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/nominate'
+    | '/privacy-policy'
+    | '/refund-policy'
     | '/schedule'
     | '/sitemap.xml'
+    | '/terms-conditions'
     | '/venue'
+    | '/winners'
+    | '/admin/attendees'
+    | '/admin/dashboard'
+    | '/admin/export'
+    | '/admin/gallery'
+    | '/admin/nominations'
+    | '/admin/partners'
+    | '/admin/past-events'
+    | '/admin/payments'
+    | '/admin/settings'
+    | '/admin/testimonials'
+    | '/admin/videos'
+    | '/admin/winners'
+    | '/admin'
+    | '/admin/nominations/$id'
   id:
     | '__root__'
     | '/'
@@ -142,9 +340,27 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/nominate'
+    | '/privacy-policy'
+    | '/refund-policy'
     | '/schedule'
     | '/sitemap.xml'
+    | '/terms-conditions'
     | '/venue'
+    | '/winners'
+    | '/admin/attendees'
+    | '/admin/dashboard'
+    | '/admin/export'
+    | '/admin/gallery'
+    | '/admin/nominations'
+    | '/admin/partners'
+    | '/admin/past-events'
+    | '/admin/payments'
+    | '/admin/settings'
+    | '/admin/testimonials'
+    | '/admin/videos'
+    | '/admin/winners'
+    | '/admin/'
+    | '/admin/nominations/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -155,18 +371,49 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   EventsRoute: typeof EventsRoute
   NominateRoute: typeof NominateRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  RefundPolicyRoute: typeof RefundPolicyRoute
   ScheduleRoute: typeof ScheduleRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TermsConditionsRoute: typeof TermsConditionsRoute
   VenueRoute: typeof VenueRoute
+  WinnersRoute: typeof WinnersRoute
+  AdminAttendeesRoute: typeof AdminAttendeesRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminExportRoute: typeof AdminExportRoute
+  AdminGalleryRoute: typeof AdminGalleryRoute
+  AdminNominationsRoute: typeof AdminNominationsRouteWithChildren
+  AdminPartnersRoute: typeof AdminPartnersRoute
+  AdminPastEventsRoute: typeof AdminPastEventsRoute
+  AdminPaymentsRoute: typeof AdminPaymentsRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminTestimonialsRoute: typeof AdminTestimonialsRoute
+  AdminVideosRoute: typeof AdminVideosRoute
+  AdminWinnersRoute: typeof AdminWinnersRoute
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/winners': {
+      id: '/winners'
+      path: '/winners'
+      fullPath: '/winners'
+      preLoaderRoute: typeof WinnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/venue': {
       id: '/venue'
       path: '/venue'
       fullPath: '/venue'
       preLoaderRoute: typeof VenueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms-conditions': {
+      id: '/terms-conditions'
+      path: '/terms-conditions'
+      fullPath: '/terms-conditions'
+      preLoaderRoute: typeof TermsConditionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -181,6 +428,20 @@ declare module '@tanstack/react-router' {
       path: '/schedule'
       fullPath: '/schedule'
       preLoaderRoute: typeof ScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund-policy': {
+      id: '/refund-policy'
+      path: '/refund-policy'
+      fullPath: '/refund-policy'
+      preLoaderRoute: typeof RefundPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/nominate': {
@@ -232,8 +493,117 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/winners': {
+      id: '/admin/winners'
+      path: '/admin/winners'
+      fullPath: '/admin/winners'
+      preLoaderRoute: typeof AdminWinnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/videos': {
+      id: '/admin/videos'
+      path: '/admin/videos'
+      fullPath: '/admin/videos'
+      preLoaderRoute: typeof AdminVideosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/testimonials': {
+      id: '/admin/testimonials'
+      path: '/admin/testimonials'
+      fullPath: '/admin/testimonials'
+      preLoaderRoute: typeof AdminTestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/payments': {
+      id: '/admin/payments'
+      path: '/admin/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/past-events': {
+      id: '/admin/past-events'
+      path: '/admin/past-events'
+      fullPath: '/admin/past-events'
+      preLoaderRoute: typeof AdminPastEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/partners': {
+      id: '/admin/partners'
+      path: '/admin/partners'
+      fullPath: '/admin/partners'
+      preLoaderRoute: typeof AdminPartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/nominations': {
+      id: '/admin/nominations'
+      path: '/admin/nominations'
+      fullPath: '/admin/nominations'
+      preLoaderRoute: typeof AdminNominationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/gallery': {
+      id: '/admin/gallery'
+      path: '/admin/gallery'
+      fullPath: '/admin/gallery'
+      preLoaderRoute: typeof AdminGalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/export': {
+      id: '/admin/export'
+      path: '/admin/export'
+      fullPath: '/admin/export'
+      preLoaderRoute: typeof AdminExportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/attendees': {
+      id: '/admin/attendees'
+      path: '/admin/attendees'
+      fullPath: '/admin/attendees'
+      preLoaderRoute: typeof AdminAttendeesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/nominations/$id': {
+      id: '/admin/nominations/$id'
+      path: '/$id'
+      fullPath: '/admin/nominations/$id'
+      preLoaderRoute: typeof AdminNominationsIdRouteImport
+      parentRoute: typeof AdminNominationsRoute
+    }
   }
 }
+
+interface AdminNominationsRouteChildren {
+  AdminNominationsIdRoute: typeof AdminNominationsIdRoute
+}
+
+const AdminNominationsRouteChildren: AdminNominationsRouteChildren = {
+  AdminNominationsIdRoute: AdminNominationsIdRoute,
+}
+
+const AdminNominationsRouteWithChildren =
+  AdminNominationsRoute._addFileChildren(AdminNominationsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -243,10 +613,37 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   EventsRoute: EventsRoute,
   NominateRoute: NominateRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
+  RefundPolicyRoute: RefundPolicyRoute,
   ScheduleRoute: ScheduleRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TermsConditionsRoute: TermsConditionsRoute,
   VenueRoute: VenueRoute,
+  WinnersRoute: WinnersRoute,
+  AdminAttendeesRoute: AdminAttendeesRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminExportRoute: AdminExportRoute,
+  AdminGalleryRoute: AdminGalleryRoute,
+  AdminNominationsRoute: AdminNominationsRouteWithChildren,
+  AdminPartnersRoute: AdminPartnersRoute,
+  AdminPastEventsRoute: AdminPastEventsRoute,
+  AdminPaymentsRoute: AdminPaymentsRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminTestimonialsRoute: AdminTestimonialsRoute,
+  AdminVideosRoute: AdminVideosRoute,
+  AdminWinnersRoute: AdminWinnersRoute,
+  AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

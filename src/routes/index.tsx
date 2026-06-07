@@ -7,25 +7,30 @@ import { Footer } from "@/components/site/Footer";
 import { GoldParticles } from "@/components/site/GoldParticles";
 import { SectionTitle } from "@/components/site/SectionTitle";
 import { CATEGORIES } from "@/lib/categories";
+import trophyPng from "@/assets/Trophy.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "BCS Ratna Award 2025 — India's Premier Broadcasting & Media Award" },
-      { name: "description", content: "Celebrating Excellence in Broadcasting, Digital Media & Technology since 2010. Nominations open for BCS Ratna Award 2025." },
-      { property: "og:title", content: "BCS Ratna Award 2025" },
+      { title: "BCS Ratna Award 2026 — India's Premier Broadcasting & Media Award" },
+      { name: "description", content: "Celebrating Excellence in Broadcasting, Digital Media & Technology since 2010. Nominations open for BCS Ratna Award 2026." },
+      { property: "og:title", content: "BCS Ratna Award 2026" },
       { property: "og:description", content: "India's Most Prestigious Media Industry Award. Nominations Open." },
     ],
   }),
   component: HomePage,
 });
 
-const TARGET = new Date("2025-03-15T18:00:00+05:30").getTime();
+const TARGET = new Date("2026-06-30T18:00:00+05:30").getTime();
 function useCountdown() {
   const [t, setT] = useState({ d: 0, h: 0, m: 0, s: 0 });
+  const [expired, setExpired] = useState(false);
   useEffect(() => {
     const tick = () => {
       const diff = Math.max(0, TARGET - Date.now());
+      if (diff === 0) {
+        setExpired(true);
+      }
       setT({
         d: Math.floor(diff / 86400000),
         h: Math.floor((diff / 3600000) % 24),
@@ -37,7 +42,7 @@ function useCountdown() {
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, []);
-  return t;
+  return { ...t, expired };
 }
 
 function HomePage() {
@@ -62,9 +67,9 @@ function HomePage() {
 }
 
 function Hero() {
-  const t = useCountdown();
+  const { d, h, m, s, expired } = useCountdown();
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
+    <section className="relative min-h-screen flex items-center justify-center pt-[70px] md:pt-[148px]" style={{ overflow: "hidden" }}>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,168,76,0.15),transparent_60%)]" />
       <div
         className="absolute inset-0 opacity-30"
@@ -79,7 +84,61 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black" />
       <GoldParticles count={50} />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+      {/* Trophy LEFT — gentle sway */}
+      <div className="hero-trophy-wrap" style={{
+        position: "absolute",
+        left: "3%",
+        top: "50%",
+        transform: "translateY(-50%)",
+        zIndex: 2,
+        pointerEvents: "none",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}>
+        <img
+          src={trophyPng}
+          alt="trophy"
+          style={{
+            height: "680px",
+            width: "auto",
+            objectFit: "contain",
+            opacity: 0.65,
+            display: "block",
+            transformOrigin: "center bottom",
+            animation: "trophySwayLeft 4.5s ease-in-out infinite",
+          }}
+        />
+      </div>
+
+      {/* Trophy RIGHT — gentle sway */}
+      <div className="hero-trophy-wrap" style={{
+        position: "absolute",
+        right: "3%",
+        top: "50%",
+        transform: "translateY(-50%)",
+        zIndex: 2,
+        pointerEvents: "none",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}>
+        <img
+          src={trophyPng}
+          alt="trophy"
+          style={{
+            height: "680px",
+            width: "auto",
+            objectFit: "contain",
+            opacity: 0.75,
+            display: "block",
+            transformOrigin: "center bottom",
+            animation: "trophySway 4s ease-in-out infinite",
+          }}
+        />
+      </div>
+
+      <div className="hero-content max-w-5xl mx-auto px-6 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
           <span className="inline-block font-cinzel text-[10px] sm:text-xs text-[#C9A84C] border border-[#C9A84C]/40 rounded-full px-4 py-2 mb-8">
             🏆 Since 2010 · India's Premier Media Award
@@ -108,17 +167,26 @@ function Hero() {
           transition={{ duration: 1, delay: 0.8 }}
           className="mt-12"
         >
-          <p className="font-cinzel text-xs text-[#C9A84C] mb-4">The 15th Edition · March 15, 2025</p>
-          <div className="flex justify-center gap-3 sm:gap-5">
-            {[["Days", t.d], ["Hours", t.h], ["Minutes", t.m], ["Seconds", t.s]].map(([label, val]) => (
-              <div key={label as string} className="glass-card px-3 py-3 sm:px-5 sm:py-4 min-w-[68px] sm:min-w-[88px]">
-                <div className="font-display text-2xl sm:text-4xl text-gold-gradient font-bold">
-                  {String(val).padStart(2, "0")}
-                </div>
-                <div className="font-cinzel text-[9px] text-white/60 mt-1">{label}</div>
+          <p className="font-cinzel text-xs text-[#C9A84C] mb-4">The 16th Edition · June 30, 2026</p>
+          {expired ? (
+            <div className="glass-card px-8 py-8">
+              <p className="font-cinzel text-2xl sm:text-3xl text-[#C9A84C] font-bold">REGISTRATIONS CLOSED</p>
+            </div>
+          ) : (
+            <>
+              <p className="font-cinzel text-xs text-[#C9A84C] mb-3">REGISTRATION CLOSES</p>
+              <div className="flex justify-center gap-3 sm:gap-5">
+                {[["Days", d], ["Hours", h], ["Minutes", m], ["Seconds", s]].map(([label, val]) => (
+                  <div key={label as string} className="glass-card px-3 py-3 sm:px-5 sm:py-4 min-w-[68px] sm:min-w-[88px]">
+                    <div className="font-display text-2xl sm:text-4xl text-gold-gradient font-bold">
+                      {String(val).padStart(2, "0")}
+                    </div>
+                    <div className="font-cinzel text-[9px] text-white/60 mt-1">{label}</div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
         </motion.div>
 
         <motion.div
@@ -127,7 +195,7 @@ function Hero() {
           transition={{ duration: 1, delay: 1.2 }}
           className="mt-12 flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Link to="/nominate" className="btn-gold animate-pulse-gold">
+          <Link to="/nominate" search={{ category: undefined }} className="btn-gold animate-pulse-gold">
             Nominate Now <ArrowRight size={16} />
           </Link>
           <Link to="/categories" className="btn-outline-gold">Explore Categories</Link>
@@ -219,35 +287,129 @@ function Categories() {
 
 function Gallery() {
   const images = [
-    "https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1493804714600-6edb1cd93080?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
+    { year: "2010", src: "https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=800&q=80" },
+    { year: "2011", src: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80" },
+    { year: "2012", src: "https://images.unsplash.com/photo-1493804714600-6edb1cd93080?auto=format&fit=crop&w=800&q=80" },
+    { year: "2013", src: "https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=800&q=80" },
+    { year: "2014", src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80" },
+    { year: "2015", src: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&q=80" },
+    { year: "2016", src: "https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=800&q=80" },
+    { year: "2017", src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80" },
+    { year: "2018", src: "https://images.unsplash.com/photo-1493804714600-6edb1cd93080?auto=format&fit=crop&w=800&q=80" },
+    { year: "2019", src: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80" },
   ];
-  const [open, setOpen] = useState<string | null>(null);
+  
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (openIndex === null) return;
+    if (e.key === "ArrowRight") setOpenIndex((openIndex + 1) % images.length);
+    if (e.key === "ArrowLeft") setOpenIndex((openIndex - 1 + images.length) % images.length);
+    if (e.key === "Escape") setOpenIndex(null);
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [openIndex]);
+
   return (
     <section className="py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-6">
-        <SectionTitle eyebrow="Memories" title="Award Ceremony |Glimpses|" subtitle="A decade and more of red carpets, standing ovations and unforgettable nights." />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {images.map((src, i) => (
+        <div className="text-center mb-12">
+          <p className="font-cinzel text-xs text-[#C9A84C] mb-3">MEMORIES</p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-gold-gradient mb-3">
+            Award Ceremony <span className="text-white">Glimpses</span>
+          </h2>
+          <div className="gold-divider" />
+          <p className="text-white/70 mt-6 max-w-2xl mx-auto">
+            A decade and more of red carpets, standing ovations and unforgettable nights.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[250px] sm:auto-rows-[300px]">
+          {images.map((item, i) => (
             <button
               key={i}
-              onClick={() => setOpen(src)}
-              className={`overflow-hidden border border-[#C9A84C]/20 group ${i % 5 === 0 ? "row-span-2 aspect-[3/4]" : "aspect-square"}`}
+              onClick={() => setOpenIndex(i)}
+              className={`relative overflow-hidden rounded-lg group transition-all duration-300 hover:translate-y-[-8px] ${
+                i % 5 === 0 ? "sm:col-span-1 lg:col-span-1 lg:row-span-2" : ""
+              }`}
+              style={{
+                boxShadow: "0 4px 15px rgba(0,0,0,0.4)",
+              }}
             >
-              <img src={src} alt={`Ceremony ${i+1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+              <img
+                src={item.src}
+                alt={`Award Ceremony ${item.year}`}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
+                <div />
+                <div>
+                  <div className="inline-block bg-[#C9A84C] text-black px-3 py-1 rounded-full mb-2">
+                    <span className="font-cinzel text-[11px] font-bold">{item.year}</span>
+                  </div>
+                  <p className="font-cinzel text-sm text-white">Award Ceremony {item.year}</p>
+                  <button className="mt-3 text-[#C9A84C] font-cinzel text-[11px] hover:text-white transition flex items-center gap-1">
+                    VIEW GALLERY →
+                  </button>
+                </div>
+              </div>
+              <div className="absolute inset-0 border border-[#C9A84C]/30 group-hover:border-[#C9A84C] transition-colors duration-300 rounded-lg" />
             </button>
           ))}
         </div>
       </div>
-      {open && (
-        <div className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-6" onClick={() => setOpen(null)}>
-          <img src={open} alt="" className="max-w-5xl max-h-[85vh] object-contain border border-[#C9A84C]/40" />
+
+      {openIndex !== null && (
+        <div
+          className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-6"
+          onClick={() => setOpenIndex(null)}
+        >
+          <div className="relative max-w-6xl w-full" onClick={(e) => e.stopPropagation()}>
+            <motion.img
+              key={openIndex}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              src={images[openIndex].src}
+              alt={`Gallery ${images[openIndex].year}`}
+              className="w-full max-h-[85vh] object-contain border-2 border-[#C9A84C] rounded-lg"
+            />
+
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-black/80 px-4 py-2 rounded-full">
+              <span className="font-cinzel text-xs text-[#C9A84C]">
+                {openIndex + 1} / {images.length}
+              </span>
+            </div>
+
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/80 px-6 py-3 rounded-lg text-center">
+              <p className="font-cinzel text-sm text-white">
+                Award Ceremony {images[openIndex].year} — BCS Ratna Award
+              </p>
+            </div>
+
+            <button
+              onClick={() => setOpenIndex((openIndex - 1 + images.length) % images.length)}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-14 h-14 rounded-full bg-[#C9A84C]/20 hover:bg-[#C9A84C] hover:text-black text-[#C9A84C] transition-all flex items-center justify-center text-2xl"
+            >
+              ←
+            </button>
+
+            <button
+              onClick={() => setOpenIndex((openIndex + 1) % images.length)}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 w-14 h-14 rounded-full bg-[#C9A84C]/20 hover:bg-[#C9A84C] hover:text-black text-[#C9A84C] transition-all flex items-center justify-center text-2xl"
+            >
+              →
+            </button>
+
+            <button
+              onClick={() => setOpenIndex(null)}
+              className="absolute top-4 right-4 w-12 h-12 rounded-full bg-[#C9A84C] hover:bg-white text-black hover:text-[#C9A84C] transition-all flex items-center justify-center text-2xl font-bold"
+            >
+              ✕
+            </button>
+          </div>
         </div>
       )}
     </section>
@@ -286,7 +448,7 @@ function Videos() {
     { id: "9bZkp7q19f0", title: "Lifetime Achievement Tribute" },
     { id: "kJQP7kiw5Fk", title: "Chairman's Address" },
     { id: "RgKAFK5djSk", title: "Red Carpet Specials" },
-    { id: "OPf0YbXqDm0", title: "Trailer 2025 Edition" },
+    { id: "OPf0YbXqDm0", title: "Trailer 2026 Edition" },
   ];
   const [open, setOpen] = useState<string | null>(null);
   return (
@@ -514,13 +676,13 @@ function CtaBanner() {
       <div className="relative max-w-4xl mx-auto px-6 text-center">
         <p className="font-cinzel text-xs text-black/80 mb-4">Nominations Now Open</p>
         <h2 className="font-display text-3xl md:text-5xl font-black text-black leading-tight">
-          BCS Ratna Award 2025
+          BCS Ratna Award 2026
         </h2>
         <p className="text-black/80 mt-6 max-w-2xl mx-auto">
           Join the legends. Stake your claim. Be celebrated at India's most prestigious media gala.
         </p>
         <div className="mt-10">
-          <Link to="/nominate" className="inline-flex items-center gap-2 bg-black text-[#C9A84C] font-cinzel text-xs px-10 py-5 hover:bg-[#0a0a0a] hover:scale-105 transition-all border-2 border-black animate-pulse-gold">
+          <Link to="/nominate" search={{ category: undefined }} className="inline-flex items-center gap-2 bg-black text-[#C9A84C] font-cinzel text-xs px-10 py-5 hover:bg-[#0a0a0a] hover:scale-105 transition-all border-2 border-black animate-pulse-gold">
             Register &amp; Nominate Now <ArrowRight size={16} />
           </Link>
         </div>

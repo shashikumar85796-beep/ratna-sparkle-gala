@@ -23,7 +23,7 @@ const TIMELINE = [
   { year: "2019", event: "10th edition gala with international jury panel." },
   { year: "2022", event: "Introduced Digital Creator and AI/ML innovation honours." },
   { year: "2024", event: "Record 4,200+ nominations from across the subcontinent." },
-  { year: "2025", event: "The 15th edition — the most ambitious yet." },
+  { year: "2026", event: "The 16th edition — the most ambitious yet." },
 ];
 
 const TEAM = [
@@ -38,10 +38,11 @@ function AboutPage() {
     <div className="bg-background min-h-screen">
       <Navigation />
 
-      <section className="relative pt-36 pb-20 overflow-hidden">
+      <section className="relative pt-[70px] md:pt-[148px] pb-20 overflow-hidden">
         <GoldParticles count={30} />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,168,76,0.18),transparent_60%)]" />
         <div className="relative max-w-4xl mx-auto px-6 text-center">
+          <img src="/assets/BCS-Trophy-Website-Logo.png" alt="BCS Ratna Award" className="mx-auto mb-6 w-auto" style={{ height: "72px" }} />
           <p className="font-cinzel text-xs text-[#C9A84C] mb-4">Our Story</p>
           <h1 className="font-display text-5xl md:text-6xl font-bold text-gold-gradient">A Legacy of Honour</h1>
           <div className="gold-divider" />
@@ -69,7 +70,7 @@ function AboutPage() {
 
       <section className="py-20 bg-[#0d0d0d]">
         <div className="max-w-4xl mx-auto px-6">
-          <SectionTitle eyebrow="The Journey" title="Milestones |2010 — 2025|" />
+          <SectionTitle eyebrow="The Journey" title="Milestones |2010 — 2026|" />
           <div className="relative">
             <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-[#C9A84C]/40" />
             {TIMELINE.map((m, i) => (

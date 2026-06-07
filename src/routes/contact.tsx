@@ -57,7 +57,7 @@ function ContactPage() {
       <Toaster theme="dark" position="top-center" />
       <Navigation />
 
-      <section className="relative pt-36 pb-20 overflow-hidden">
+      <section className="relative pt-[70px] md:pt-[148px] pb-20 overflow-hidden">
         <GoldParticles count={30} />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,168,76,0.18),transparent_60%)]" />
         <div className="relative max-w-4xl mx-auto px-6 text-center">

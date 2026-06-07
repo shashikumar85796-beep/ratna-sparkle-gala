@@ -1,12 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 const links = [
-  { to: "/", label: "Home" },
   { to: "/about", label: "About" },
   { to: "/categories", label: "Categories" },
   { to: "/events", label: "Past Events" },
+  { to: "/winners", label: "Winners" },
 ] as const;
 
 const eventInfoLinks = [
@@ -17,107 +17,517 @@ const eventInfoLinks = [
 
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+  const [drawerEventOpen, setDrawerEventOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => setScrolled(window.scrollY > 80);
     onScroll();
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-black/90 backdrop-blur-lg border-b border-[#C9A84C]/20 py-3" : "bg-transparent py-5"
-      }`}
-      style={{ paddingTop: scrolled ? undefined : undefined }}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="text-2xl font-display font-bold text-gold-gradient leading-none">BCS</span>
-          <span className="font-cinzel text-xs text-[#C9A84C] hidden sm:block">Ratna Award</span>
-        </Link>
+  // Close drawer on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (drawerOpen && drawerRef.current && !drawerRef.current.contains(e.target as Node)) {
+        setDrawerOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [drawerOpen]);
 
-        <nav className="hidden lg:flex items-center gap-9">
+  // Lock body scroll when drawer open
+  useEffect(() => {
+    document.body.style.overflow = drawerOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [drawerOpen]);
+
+  const row1Height = scrolled ? 76 : 100;
+  const logoHeight = scrolled ? 70 : 100;
+
+  return (
+    <>
+      {/* ─── FIXED HEADER ─────────────────────────── */}
+      <header
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          background: scrolled ? "rgba(5,5,5,0.98)" : "rgba(8,8,8,0.95)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          borderBottom: `1px solid ${scrolled ? "rgba(201,168,76,0.35)" : "rgba(201,168,76,0.2)"}`,
+          transition: "all 0.35s ease",
+        }}
+      >
+        {/* ── ROW 1: LOGO ROW (desktop) ── */}
+        <div
+          className="hidden md:flex"
+          style={{
+            height: `${row1Height}px`,
+            alignItems: "center",
+            justifyContent: "space-between",
+            position: "relative",
+            padding: "0 48px",
+            backgroundImage:
+              "linear-gradient(90deg, transparent 0%, rgba(201,168,76,0.15) 20%, rgba(201,168,76,0.4) 50%, rgba(201,168,76,0.15) 80%, transparent 100%)",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 1px",
+            backgroundPosition: "bottom",
+            transition: "height 0.35s ease",
+          }}
+        >
+          {/* Invisible left spacer — mirrors button width to keep logo truly centered */}
+          <div style={{ visibility: "hidden", pointerEvents: "none", minWidth: "160px" }}>
+            <span className="nominate-btn" style={{ opacity: 0 }}>Nominate Now</span>
+          </div>
+
+          {/* Centered logo */}
+          <Link to="/" style={{ display: "flex", alignItems: "center", flex: "0 0 auto" }}>
+            <img
+              src="/assets/BCS-Trophy-Website-Logo.png"
+              alt="BCS Ratna Award"
+              style={{
+                height: `${logoHeight}px`,
+                width: "auto",
+                maxWidth: "320px",
+                objectFit: "contain",
+                display: "block",
+                transition: "height 0.35s ease, filter 0.3s ease",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.filter = "drop-shadow(0 0 12px rgba(201,168,76,0.6))";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.filter = "none";
+              }}
+            />
+          </Link>
+
+          {/* NOMINATE NOW — right side */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", minWidth: "160px" }}>
+            <Link
+              to="/nominate"
+              search={{ category: undefined }}
+              className="nominate-btn"
+              style={{ whiteSpace: "nowrap" }}
+            >
+              Nominate Now
+            </Link>
+          </div>
+        </div>
+
+        {/* ── ROW 2: NAV MENU ROW (desktop) ── */}
+        <div
+          className="hidden md:flex"
+          style={{
+            height: "48px",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "36px",
+            padding: "0 48px",
+            width: "100%",
+            margin: 0,
+            listStyle: "none",
+          }}
+        >
           {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className="font-cinzel text-xs text-white/80 hover:text-[#C9A84C] transition-colors"
-              activeProps={{ className: "font-cinzel text-xs text-[#C9A84C]" }}
-              activeOptions={{ exact: l.to === "/" }}
+              className="nav2-link"
+              activeProps={{ className: "nav2-link nav2-link--active" }}
+              style={{ display: "inline-flex", alignItems: "center", height: "100%", whiteSpace: "nowrap", lineHeight: 1 }}
             >
               {l.label}
             </Link>
           ))}
+
+          {/* Event Info Dropdown */}
           <div
-            className="relative"
+            style={{ position: "relative", display: "flex", alignItems: "center", height: "100%" }}
             onMouseEnter={() => setDropdown(true)}
             onMouseLeave={() => setDropdown(false)}
           >
-            <button className="font-cinzel text-xs text-white/80 hover:text-[#C9A84C] transition-colors inline-flex items-center gap-1">
-              Event Info <ChevronDown size={12} />
+            <button
+              className="nav2-link"
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+                height: "100%",
+                whiteSpace: "nowrap",
+                lineHeight: 1,
+                padding: "4px 0",
+              }}
+              aria-expanded={dropdown}
+            >
+              Event Info
+              <ChevronDown
+                size={11}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  marginLeft: "4px",
+                  verticalAlign: "middle",
+                  lineHeight: 1,
+                  transition: "transform 0.25s ease",
+                  transform: dropdown ? "rotate(180deg)" : "rotate(0deg)",
+                  flexShrink: 0,
+                }}
+              />
             </button>
+
             {dropdown && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-64">
-                <div className="bg-black/95 backdrop-blur-lg border border-[#C9A84C]/30 rounded p-2 shadow-[0_10px_40px_rgba(201,168,76,0.2)]">
-                  {eventInfoLinks.map((l) => (
-                    <Link
-                      key={l.to}
-                      to={l.to}
-                      className="block px-4 py-3 font-cinzel text-[11px] text-white/80 hover:text-[#C9A84C] hover:bg-[#C9A84C]/10 transition"
-                    >
-                      {l.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-          <Link
-            to="/contact"
-            className="font-cinzel text-xs text-white/80 hover:text-[#C9A84C] transition-colors"
-            activeProps={{ className: "font-cinzel text-xs text-[#C9A84C]" }}
-          >
-            Contact
-          </Link>
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <Link to="/nominate" className="hidden md:inline-flex btn-gold animate-pulse-gold !py-2.5 !px-5 text-[10px]">
-            Nominate Now
-          </Link>
-          <button className="lg:hidden text-[#C9A84C]" onClick={() => setOpen((v) => !v)} aria-label="Menu">
-            {open ? <X size={26} /> : <Menu size={26} />}
-          </button>
-        </div>
-      </div>
-
-      {open && (
-        <div className="lg:hidden bg-black/95 border-t border-[#C9A84C]/20 mt-3">
-          <div className="px-6 py-6 flex flex-col gap-5">
-            {links.map((l) => (
-              <Link key={l.to} to={l.to} onClick={() => setOpen(false)} className="font-cinzel text-sm text-white/90">
-                {l.label}
-              </Link>
-            ))}
-            <div className="border-t border-[#C9A84C]/20 pt-4">
-              <p className="font-cinzel text-[10px] text-[#C9A84C] mb-3">Event Info</p>
-              <div className="flex flex-col gap-3 pl-2">
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  background: "rgba(8,8,8,0.97)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(201,168,76,0.2)",
+                  borderTop: "none",
+                  borderRadius: "0 0 14px 14px",
+                  minWidth: "220px",
+                  padding: "6px 0",
+                  boxShadow: "0 16px 40px rgba(0,0,0,0.7)",
+                  zIndex: 200,
+                }}
+              >
                 {eventInfoLinks.map((l) => (
-                  <Link key={l.to} to={l.to} onClick={() => setOpen(false)} className="font-cinzel text-xs text-white/80">
+                  <Link
+                    key={l.to}
+                    to={l.to}
+                    onClick={() => setDropdown(false)}
+                    style={{
+                      display: "block",
+                      padding: "12px 20px",
+                      fontFamily: "'Raleway', sans-serif",
+                      fontWeight: 700,
+                      fontSize: "11px",
+                      letterSpacing: "1.5px",
+                      textTransform: "uppercase",
+                      color: "#CCCCCC",
+                      textDecoration: "none",
+                      transition: "color 0.2s ease, background 0.2s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "#C9A84C";
+                      e.currentTarget.style.background = "rgba(201,168,76,0.07)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "#CCCCCC";
+                      e.currentTarget.style.background = "transparent";
+                    }}
+                  >
                     {l.label}
                   </Link>
                 ))}
               </div>
-            </div>
-            <Link to="/contact" onClick={() => setOpen(false)} className="font-cinzel text-sm text-white/90">Contact</Link>
-            <Link to="/nominate" onClick={() => setOpen(false)} className="btn-gold w-fit">Nominate Now</Link>
+            )}
           </div>
+
+          <Link
+            to="/contact"
+            className="nav2-link"
+            activeProps={{ className: "nav2-link nav2-link--active" }}
+            style={{ display: "inline-flex", alignItems: "center", height: "100%", whiteSpace: "nowrap", lineHeight: 1 }}
+          >
+            Contact
+          </Link>
         </div>
-      )}
-    </header>
+
+        {/* ── MOBILE SINGLE ROW ── */}
+        <div
+          className="flex md:hidden"
+          style={{
+            height: "70px",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 20px",
+          }}
+        >
+          <Link to="/" style={{ display: "flex", alignItems: "center" }}>
+            <img
+              src="/assets/BCS-Trophy-Website-Logo.png"
+              alt="BCS Ratna Award"
+              style={{ height: "56px", width: "auto", maxWidth: "220px", objectFit: "contain", display: "block" }}
+            />
+          </Link>
+
+          {/* Hamburger */}
+          <button
+            onClick={() => setDrawerOpen((v) => !v)}
+            aria-label={drawerOpen ? "Close menu" : "Open menu"}
+            style={{
+              width: "44px",
+              height: "44px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "5px",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: 0,
+            }}
+          >
+            <span style={{
+              display: "block", width: "22px", height: "2px", background: "#C9A84C", borderRadius: "2px",
+              transition: "transform 0.3s ease, opacity 0.3s ease",
+              transform: drawerOpen ? "translateY(7px) rotate(45deg)" : "none",
+            }} />
+            <span style={{
+              display: "block", width: "22px", height: "2px", background: "#C9A84C", borderRadius: "2px",
+              transition: "opacity 0.3s ease, transform 0.3s ease",
+              opacity: drawerOpen ? 0 : 1,
+              transform: drawerOpen ? "scaleX(0)" : "none",
+            }} />
+            <span style={{
+              display: "block", width: "22px", height: "2px", background: "#C9A84C", borderRadius: "2px",
+              transition: "transform 0.3s ease",
+              transform: drawerOpen ? "translateY(-7px) rotate(-45deg)" : "none",
+            }} />
+          </button>
+        </div>
+      </header>
+
+      {/* ─── MOBILE OVERLAY ───────────────────────── */}
+      <div
+        className="md:hidden"
+        onClick={() => setDrawerOpen(false)}
+        style={{
+          position: "fixed",
+          inset: 0,
+          background: "rgba(0,0,0,0.6)",
+          zIndex: 9998,
+          transition: "opacity 0.3s ease",
+          opacity: drawerOpen ? 1 : 0,
+          pointerEvents: drawerOpen ? "auto" : "none",
+        }}
+      />
+
+      {/* ─── MOBILE DRAWER ────────────────────────── */}
+      <div
+        ref={drawerRef}
+        className="md:hidden"
+        style={{
+          position: "fixed",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          width: "min(85vw, 320px)",
+          background: "rgba(6,6,6,0.98)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderLeft: "1px solid rgba(201,168,76,0.2)",
+          zIndex: 9999,
+          transform: drawerOpen ? "translateX(0)" : "translateX(100%)",
+          transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1)",
+          display: "flex",
+          flexDirection: "column",
+          overflowY: "auto",
+        }}
+      >
+        {/* Drawer header */}
+        <div style={{
+          height: "64px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 24px",
+          borderBottom: "1px solid rgba(201,168,76,0.1)",
+          flexShrink: 0,
+        }}>
+          <img
+            src="/assets/BCS-Trophy-Website-Logo.png"
+            alt="BCS Ratna Award"
+            style={{ height: "40px", width: "auto", objectFit: "contain" }}
+          />
+          <button
+            onClick={() => setDrawerOpen(false)}
+            aria-label="Close menu"
+            style={{
+              width: "44px", height: "44px",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              color: "#C9A84C", fontSize: "20px",
+              background: "none", border: "none", cursor: "pointer",
+            }}
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* NOMINATE NOW button */}
+        <div style={{ padding: "20px 20px 8px" }}>
+          <Link
+            to="/nominate"
+            search={{ category: undefined }}
+            onClick={() => setDrawerOpen(false)}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              padding: "14px",
+              background: "linear-gradient(135deg, #BF953F, #C9A84C, #B38728)",
+              color: "#000000",
+              fontFamily: "'Raleway', sans-serif",
+              fontWeight: 800,
+              fontSize: "13px",
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              borderRadius: "10px",
+              textDecoration: "none",
+              boxShadow: "0 4px 15px rgba(201,168,76,0.35)",
+            }}
+          >
+            Nominate Now
+          </Link>
+        </div>
+
+        {/* Drawer nav links */}
+        <div style={{ flex: 1 }}>
+          {links.map((l) => (
+            <Link
+              key={l.to}
+              to={l.to}
+              onClick={() => setDrawerOpen(false)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "16px 24px",
+                fontFamily: "'Raleway', sans-serif",
+                fontWeight: 700,
+                fontSize: "13px",
+                letterSpacing: "2px",
+                textTransform: "uppercase",
+                color: "#FFFFFF",
+                borderBottom: "1px solid rgba(255,255,255,0.05)",
+                textDecoration: "none",
+                transition: "color 0.2s, background 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#C9A84C";
+                e.currentTarget.style.background = "rgba(201,168,76,0.05)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "#FFFFFF";
+                e.currentTarget.style.background = "transparent";
+              }}
+            >
+              {l.label}
+            </Link>
+          ))}
+
+          {/* Event Info accordion */}
+          <div>
+            <button
+              onClick={() => setDrawerEventOpen((v) => !v)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                padding: "16px 24px",
+                fontFamily: "'Raleway', sans-serif",
+                fontWeight: 700,
+                fontSize: "13px",
+                letterSpacing: "2px",
+                textTransform: "uppercase",
+                color: "#FFFFFF",
+                borderBottom: "1px solid rgba(255,255,255,0.05)",
+                background: "none",
+                border: "none",
+                borderBottom2: "1px solid rgba(255,255,255,0.05)",
+                cursor: "pointer",
+                transition: "color 0.2s",
+              } as React.CSSProperties}
+            >
+              <span>Event Info</span>
+              <ChevronDown
+                size={14}
+                style={{
+                  color: "#C9A84C",
+                  transition: "transform 0.25s ease",
+                  transform: drawerEventOpen ? "rotate(180deg)" : "rotate(0deg)",
+                }}
+              />
+            </button>
+            {drawerEventOpen && (
+              <div style={{ borderBottom: "1px solid rgba(255,255,255,0.05)", background: "rgba(201,168,76,0.03)" }}>
+                {eventInfoLinks.map((l) => (
+                  <Link
+                    key={l.to}
+                    to={l.to}
+                    onClick={() => setDrawerOpen(false)}
+                    style={{
+                      display: "block",
+                      padding: "13px 24px 13px 40px",
+                      fontFamily: "'Raleway', sans-serif",
+                      fontWeight: 600,
+                      fontSize: "11px",
+                      letterSpacing: "1.5px",
+                      textTransform: "uppercase",
+                      color: "#AAAAAA",
+                      textDecoration: "none",
+                      transition: "color 0.2s",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A84C")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "#AAAAAA")}
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <Link
+            to="/contact"
+            onClick={() => setDrawerOpen(false)}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "16px 24px",
+              fontFamily: "'Raleway', sans-serif",
+              fontWeight: 700,
+              fontSize: "13px",
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: "#FFFFFF",
+              borderBottom: "1px solid rgba(255,255,255,0.05)",
+              textDecoration: "none",
+              transition: "color 0.2s, background 0.2s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "#C9A84C";
+              e.currentTarget.style.background = "rgba(201,168,76,0.05)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "#FFFFFF";
+              e.currentTarget.style.background = "transparent";
+            }}
+          >
+            Contact
+          </Link>
+        </div>
+      </div>
+    </>
   );
 }

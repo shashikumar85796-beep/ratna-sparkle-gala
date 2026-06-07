@@ -8,7 +8,7 @@ import { ArrowRight, Gavel, ScrollText, Users } from "lucide-react";
 export const Route = createFileRoute("/categories")({
   head: () => ({
     meta: [
-      { title: "Award Categories — BCS Ratna 2025" },
+      { title: "Award Categories — BCS Ratna 2026" },
       { name: "description", content: "Explore all six sectors honoured at the BCS Ratna Awards — Content, Distribution, Technology, Digital Platform, Creators and Individual." },
     ],
   }),
@@ -19,7 +19,7 @@ function CategoriesPage() {
   return (
     <div className="bg-background min-h-screen">
       <Navigation />
-      <section className="relative pt-36 pb-20 overflow-hidden">
+      <section className="relative pt-[70px] md:pt-[148px] pb-20 overflow-hidden">
         <GoldParticles count={30} />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,168,76,0.18),transparent_60%)]" />
         <div className="relative max-w-4xl mx-auto px-6 text-center">

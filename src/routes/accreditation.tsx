@@ -79,10 +79,11 @@ function AccreditationPage() {
       <Toaster theme="dark" position="top-center" />
       <Navigation />
 
-      <section className="relative pt-36 pb-20 overflow-hidden">
+      <section className="relative pt-[70px] md:pt-[148px] pb-20 overflow-hidden">
         <GoldParticles count={30} />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,168,76,0.18),transparent_60%)]" />
         <div className="relative max-w-4xl mx-auto px-6 text-center">
+          <img src="/assets/BCS-Trophy-Website-Logo.png" alt="BCS Ratna Award" className="mx-auto mb-6 w-auto" style={{ height: "72px" }} />
           <p className="font-cinzel text-xs text-[#C9A84C] mb-4">For Media</p>
           <h1 className="font-display text-5xl md:text-6xl font-bold text-gold-gradient leading-tight">PRESS & MEDIA<br/>ACCREDITATION</h1>
           <div className="gold-divider" />
